@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mocha Commands Reference</title>
+    <title>Mocha Command Reference</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -27,6 +28,7 @@
                         'glow': 'glow 2s ease-in-out infinite alternate',
                         'float': 'float 6s ease-in-out infinite',
                         'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'shimmer': 'shimmer 2s infinite linear',
                     },
                     keyframes: {
                         glow: {
@@ -40,6 +42,10 @@
                         fadeIn: {
                             '0%': { opacity: '0', transform: 'translateY(10px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' }
                         }
                     }
                 }
@@ -53,6 +59,9 @@
             overflow: hidden;
             opacity: 0;
             animation: fadeIn 0.5s ease-out forwards;
+            background: linear-gradient(145deg, rgba(43, 43, 43, 0.6), rgba(30, 30, 30, 0.8));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(80, 80, 80, 0.2);
         }
         
         @keyframes fadeIn {
@@ -86,8 +95,63 @@
         }
         
         .command-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(93, 92, 222, 0.3);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.7), 
+                         0 0 10px rgba(93, 92, 222, 0.3),
+                         0 0 20px rgba(93, 92, 222, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #6A6AE3, #5D5CDE, #4A49B0);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 2s infinite;
+            transform: skewX(-20deg);
+        }
+        
+        .syntax-block {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .syntax-block:hover {
+            transform: translateX(5px);
+            box-shadow: -5px 0 0 0 #5D5CDE;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+        
+        .syntax-block:hover .copy-btn,
+        .example-block:hover .copy-btn {
+            opacity: 1;
+        }
+        
+        .example-block {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .example-block:hover {
+            transform: translateX(5px);
+            box-shadow: -5px 0 0 0 #4ADE80;
         }
         
         @keyframes neon-pulse {
@@ -123,6 +187,96 @@
             100% { opacity: 0.5; }
         }
         
+        .category-button {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-button.active {
+            background: linear-gradient(135deg, #6A6AE3, #5D5CDE, #4A49B0);
+            color: white;
+        }
+        
+        .category-button.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(93, 92, 222, 0.3), rgba(119, 118, 229, 0.3));
+            z-index: -1;
+        }
+        
+        .category-button:hover:not(.active) {
+            background-color: #2D2D2D;
+            transform: translateY(-2px);
+        }
+        
+        .category-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 6px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .permission-badge {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .permission-badge i {
+            margin-right: 4px;
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -140,6 +294,7 @@
             background: #4A49B0;
         }
         
+        /* Animation delays for staggered appearance */
         .command-card:nth-child(1) { animation-delay: 0.1s; }
         .command-card:nth-child(2) { animation-delay: 0.2s; }
         .command-card:nth-child(3) { animation-delay: 0.3s; }
@@ -147,24 +302,37 @@
         .command-card:nth-child(5) { animation-delay: 0.5s; }
         .command-card:nth-child(6) { animation-delay: 0.6s; }
         .command-card:nth-child(7) { animation-delay: 0.7s; }
+        
+        /* Blinking cursor animation for search placeholder */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .search-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-gray-200 min-h-screen transition-colors duration-200">
-
+    <!-- Force dark mode -->
     <script>
         document.documentElement.classList.add('dark');
     </script>
-
+    
+    <!-- Background particles -->
     <div id="particles-js" class="fixed inset-0 z-0 opacity-30"></div>
 
     <div class="container mx-auto px-4 py-8 max-w-4xl relative z-10">
-
+        <!-- Header -->
         <div class="text-center mb-10 animate-float">
             <h1 class="text-5xl font-bold text-white mb-4 neon-text">Mocha Commands</h1>
-            <p class="text-xl text-gray-300">Your comprehensive command references for Mocha!</p>
+            <p class="text-xl text-gray-300">Mochas comprehensive command references!</p>
         </div>
 
-        <div class="mb-10 relative search-bar">
+        <!-- Search Bar -->
+        <div class="mb-6 relative search-bar">
             <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -172,18 +340,32 @@
             </div>
             <input type="text" id="searchInput" placeholder="Search commands by name, description, or syntax..." 
                 class="w-full pl-12 pr-4 py-4 rounded-lg border-2 border-dark-600 bg-dark-800 text-white text-base focus:outline-none focus:border-primary transition-all duration-300">
-            <div id="searchStats" class="mt-2 text-sm text-gray-400 hidden">
-                Showing <span id="resultCount">0</span> of <span id="totalCount">0</span> commands
+        </div>
+        
+        <!-- Category Filters -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="text-lg font-medium text-white">Filter by Category</h3>
+                <div id="searchStats" class="text-sm text-gray-400 hidden">
+                    Showing <span id="resultCount">0</span> of <span id="totalCount">0</span> commands
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2" id="categoryFilters">
+                <!-- Categories will be populated here -->
+                <button class="category-button active bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center" data-category="all">
+                    <i class="fas fa-globe-americas mr-2"></i> All Categories
+                </button>
             </div>
         </div>
 
+        <!-- Commands List -->
         <div class="space-y-6" id="commandsList">
-
+            <!-- Commands will be populated here -->
         </div>
     </div>
 
     <script>
-
+        // Initialize particles.js
         document.addEventListener('DOMContentLoaded', function() {
             particlesJS("particles-js", {
                 particles: {
@@ -225,6 +407,7 @@
             });
         });
 
+        // Bot commands data
         const commands = [
             {
                 name: "!timeout",
@@ -232,7 +415,8 @@
                 description: "Temporarily restricts a user from sending messages or interacting in the server.",
                 example: "!timeout @User#1234 1h Spamming",
                 permission: "Manage Messages",
-                category: "moderation"
+                category: "moderation",
+                icon: "fa-user-clock"
             },
             {
                 name: "!untimeout",
@@ -240,7 +424,8 @@
                 description: "Removes an active timeout from a user, restoring their ability to send messages.",
                 example: "!untimeout @User#1234",
                 permission: "Manage Messages",
-                category: "moderation"
+                category: "moderation",
+                icon: "fa-user-check"
             },
             {
                 name: "!ping",
@@ -248,7 +433,8 @@
                 description: "Checks the bot's response time and connection status.",
                 example: "!ping",
                 permission: "None",
-                category: "utility"
+                category: "utility",
+                icon: "fa-network-wired"
             },
             {
                 name: "!ban",
@@ -256,7 +442,8 @@
                 description: "Permanently removes a user from the server. They cannot rejoin unless unbanned.",
                 example: "!ban @User#1234 Violation of server rules",
                 permission: "Ban Members",
-                category: "moderation"
+                category: "moderation",
+                icon: "fa-gavel"
             },
             {
                 name: "!unban",
@@ -264,7 +451,8 @@
                 description: "Removes a ban on a user, allowing them to rejoin the server.",
                 example: "!unban @User#1234",
                 permission: "Ban Members",
-                category: "moderation"
+                category: "moderation",
+                icon: "fa-user-plus"
             },
             {
                 name: "!softban",
@@ -272,7 +460,8 @@
                 description: "Bans and immediately unbans a user, effectively removing them from the server while deleting their recent messages.",
                 example: "!softban @User#1234 Inappropriate messages",
                 permission: "Ban Members",
-                category: "moderation"
+                category: "moderation",
+                icon: "fa-ban"
             },
             {
                 name: "!kick",
@@ -280,26 +469,133 @@
                 description: "Removes a user from the server. Unlike a ban, they can rejoin with a new invite.",
                 example: "!kick @User#1234 Disruptive behavior",
                 permission: "Kick Members",
-                category: "moderation"
+                category: "moderation",
+                icon: "fa-user-minus"
             }
         ];
 
+        // DOM elements
         const commandsList = document.getElementById('commandsList');
         const searchInput = document.getElementById('searchInput');
         const searchStats = document.getElementById('searchStats');
         const resultCount = document.getElementById('resultCount');
         const totalCount = document.getElementById('totalCount');
+        const categoryFilters = document.getElementById('categoryFilters');
         
-        function renderCommands(filteredCommands = commands) {
-            commandsList.innerHTML = '';
+        // Filter state
+        let currentCategory = 'all';
+        let currentSearchTerm = '';
+        
+        // Category icons mapping
+        const categoryIcons = {
+            'all': 'fa-globe-americas',
+            'moderation': 'fa-shield-alt',
+            'utility': 'fa-tools'
+        };
+        
+        // Extract unique categories
+        function getUniqueCategories() {
+            const categories = new Set();
+            commands.forEach(cmd => categories.add(cmd.category));
+            return Array.from(categories);
+        }
+        
+        // Initialize category filters
+        function initCategoryFilters() {
+            const categories = getUniqueCategories();
             
-            if (searchInput.value.trim() !== '') {
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                // Capitalize the first letter of the category
+                const displayName = category.charAt(0).toUpperCase() + category.slice(1);
+                
+                // Get the appropriate icon for this category
+                const icon = categoryIcons[category] || 'fa-tag';
+                
+                button.className = 'category-button bg-dark-700 hover:bg-dark-600 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center';
+                button.dataset.category = category;
+                button.innerHTML = `<i class="fas ${icon} mr-2"></i> ${displayName}`;
+                
+                button.addEventListener('click', () => {
+                    // Update active button
+                    document.querySelectorAll('.category-button').forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.classList.remove('bg-primary');
+                        btn.classList.add('bg-dark-700');
+                    });
+                    
+                    button.classList.add('active');
+                    button.classList.remove('bg-dark-700');
+                    
+                    // Update filter state
+                    currentCategory = category;
+                    
+                    // Apply filters
+                    applyFilters();
+                });
+                
+                categoryFilters.appendChild(button);
+            });
+            
+            // Add event listener to "All Categories" button
+            document.querySelector('[data-category="all"]').addEventListener('click', () => {
+                document.querySelectorAll('.category-button').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.classList.remove('bg-primary');
+                    btn.classList.add('bg-dark-700');
+                });
+                
+                document.querySelector('[data-category="all"]').classList.add('active');
+                document.querySelector('[data-category="all"]').classList.remove('bg-dark-700');
+                
+                currentCategory = 'all';
+                applyFilters();
+            });
+        }
+        
+        // Function to copy text to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Success feedback is handled in the UI with button state change
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+        
+        // Apply both category and search filters
+        function applyFilters() {
+            let filteredCommands = commands;
+            
+            // Apply category filter first
+            if (currentCategory !== 'all') {
+                filteredCommands = filteredCommands.filter(cmd => cmd.category === currentCategory);
+            }
+            
+            // Then apply search filter
+            if (currentSearchTerm !== '') {
+                filteredCommands = filteredCommands.filter(cmd => 
+                    cmd.name.toLowerCase().includes(currentSearchTerm) || 
+                    cmd.description.toLowerCase().includes(currentSearchTerm) ||
+                    cmd.syntax.toLowerCase().includes(currentSearchTerm) ||
+                    cmd.permission.toLowerCase().includes(currentSearchTerm)
+                );
+            }
+            
+            // Update search stats
+            if (currentSearchTerm !== '' || currentCategory !== 'all') {
                 searchStats.classList.remove('hidden');
                 resultCount.textContent = filteredCommands.length;
                 totalCount.textContent = commands.length;
             } else {
                 searchStats.classList.add('hidden');
             }
+            
+            renderCommands(filteredCommands);
+        }
+        
+        // Render commands with animation delay for staggered appearance
+        function renderCommands(filteredCommands = commands) {
+            commandsList.innerHTML = '';
             
             if (filteredCommands.length === 0) {
                 const noResults = document.createElement('div');
@@ -308,16 +604,31 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p class="text-gray-400 text-lg">No commands match your search.</p>
-                    <button id="clearSearchBtn" class="mt-4 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors">
-                        Clear Search
+                    <p class="text-gray-400 text-lg">No commands match your current filters.</p>
+                    <button id="clearFiltersBtn" class="mt-4 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors">
+                        Clear All Filters
                     </button>
                 `;
                 commandsList.appendChild(noResults);
                 
-                document.getElementById('clearSearchBtn').addEventListener('click', () => {
+                // Add event listener to the clear button
+                document.getElementById('clearFiltersBtn').addEventListener('click', () => {
+                    // Clear search
                     searchInput.value = '';
-                    renderCommands(commands);
+                    currentSearchTerm = '';
+                    
+                    // Reset category
+                    currentCategory = 'all';
+                    document.querySelectorAll('.category-button').forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.classList.remove('bg-primary');
+                        btn.classList.add('bg-dark-700');
+                    });
+                    document.querySelector('[data-category="all"]').classList.add('active');
+                    document.querySelector('[data-category="all"]').classList.remove('bg-dark-700');
+                    
+                    // Apply cleared filters
+                    applyFilters();
                     searchInput.focus();
                 });
                 
@@ -326,51 +637,94 @@
             
             filteredCommands.forEach((cmd, index) => {
                 const cmdCard = document.createElement('div');
-                cmdCard.className = 'command-card bg-dark-800 rounded-lg shadow-md overflow-hidden transition-all relative z-10';
+                cmdCard.className = 'command-card rounded-lg overflow-hidden transition-all relative z-10';
                 cmdCard.style.animationDelay = `${index * 0.1}s`;
                 
                 const header = document.createElement('div');
-                header.className = 'bg-primary px-5 py-4 text-white flex justify-between items-center';
+                header.className = 'card-header px-5 py-4 text-white flex justify-between items-center relative';
                 
                 const nameContainer = document.createElement('div');
+                nameContainer.className = 'flex items-center';
                 nameContainer.innerHTML = `
-                    <h3 class="text-xl font-bold">${cmd.name}</h3>
-                    <span class="text-xs opacity-80 uppercase tracking-wider">${cmd.category}</span>
+                    <div class="bg-white bg-opacity-20 rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                        <i class="fas ${cmd.icon}"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">${cmd.name}</h3>
+                        <span class="text-xs opacity-80 uppercase tracking-wider">${cmd.category}</span>
+                    </div>
                 `;
                 
+                // Permission badges with icons
                 const permissionBadge = document.createElement('div');
-                permissionBadge.className = `text-xs px-2 py-1 rounded-full ${
-                    cmd.permission === 'None' ? 'bg-green-500' : 
-                    cmd.permission.includes('Ban') ? 'bg-red-500' : 
-                    'bg-yellow-500'
-                }`;
-                permissionBadge.textContent = cmd.permission;
+                let badgeClass = 'permission-badge text-xs';
+                let permIcon = '';
+                
+                if (cmd.permission === 'None') {
+                    badgeClass += ' bg-green-500 text-white';
+                    permIcon = 'fa-check-circle';
+                } else if (cmd.permission.includes('Ban')) {
+                    badgeClass += ' bg-red-500 text-white';
+                    permIcon = 'fa-exclamation-triangle';
+                } else {
+                    badgeClass += ' bg-yellow-500 text-white';
+                    permIcon = 'fa-exclamation-circle';
+                }
+                
+                permissionBadge.className = badgeClass;
+                permissionBadge.innerHTML = `<i class="fas ${permIcon}"></i> ${cmd.permission}`;
                 
                 header.appendChild(nameContainer);
                 header.appendChild(permissionBadge);
                 
                 const body = document.createElement('div');
-                body.className = 'p-5';
+                body.className = 'p-5 bg-dark-800 bg-opacity-95';
                 
+                // Syntax section with copy button
                 const syntaxDiv = document.createElement('div');
-                syntaxDiv.className = 'mb-4';
+                syntaxDiv.className = 'mb-5 relative';
                 syntaxDiv.innerHTML = `
-                    <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-1">Syntax</h4>
-                    <code class="block bg-dark-900 p-3 rounded text-primary font-mono text-sm border border-dark-700">${cmd.syntax}</code>
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-terminal text-primary mr-2"></i>
+                        <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Syntax</h4>
+                    </div>
+                    <div class="syntax-block relative">
+                        <code class="block bg-dark-900 p-3 rounded text-primary font-mono text-sm border border-dark-700">${cmd.syntax}</code>
+                        <button class="copy-btn absolute top-2 right-2 bg-dark-700 hover:bg-dark-600 p-1.5 rounded transition-all tooltip" data-copy="${cmd.syntax}">
+                            <i class="fas fa-copy text-gray-400 hover:text-white"></i>
+                            <span class="tooltip-text text-xs">Copy to clipboard</span>
+                        </button>
+                    </div>
                 `;
                 
+                // Description section
                 const descDiv = document.createElement('div');
-                descDiv.className = 'mb-4';
+                descDiv.className = 'mb-5';
                 descDiv.innerHTML = `
-                    <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-1">Description</h4>
-                    <p class="text-gray-300">${cmd.description}</p>
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-info-circle text-blue-400 mr-2"></i>
+                        <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Description</h4>
+                    </div>
+                    <div class="bg-dark-900 p-3 rounded border border-dark-700">
+                        <p class="text-gray-300">${cmd.description}</p>
+                    </div>
                 `;
                 
+                // Example section with copy button
                 const exampleDiv = document.createElement('div');
-                exampleDiv.className = 'mb-4';
+                exampleDiv.className = 'mb-2 relative';
                 exampleDiv.innerHTML = `
-                    <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-1">Example</h4>
-                    <code class="block bg-dark-900 p-3 rounded text-green-400 font-mono text-sm border border-dark-700">${cmd.example}</code>
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+                        <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Example</h4>
+                    </div>
+                    <div class="example-block relative">
+                        <code class="block bg-dark-900 p-3 rounded text-green-400 font-mono text-sm border border-dark-700">${cmd.example}</code>
+                        <button class="copy-btn absolute top-2 right-2 bg-dark-700 hover:bg-dark-600 p-1.5 rounded transition-all tooltip" data-copy="${cmd.example}">
+                            <i class="fas fa-copy text-gray-400 hover:text-white"></i>
+                            <span class="tooltip-text text-xs">Copy to clipboard</span>
+                        </button>
+                    </div>
                 `;
                 
                 body.appendChild(syntaxDiv);
@@ -382,25 +736,31 @@
                 
                 commandsList.appendChild(cmdCard);
             });
+            
+            // Add event listeners to all copy buttons
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const textToCopy = this.getAttribute('data-copy');
+                    copyToClipboard(textToCopy);
+                    
+                    // Visual feedback
+                    const originalIcon = this.querySelector('i').className;
+                    this.querySelector('i').className = 'fas fa-check text-green-400';
+                    this.querySelector('.tooltip-text').textContent = 'Copied!';
+                    
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        this.querySelector('i').className = originalIcon;
+                        this.querySelector('.tooltip-text').textContent = 'Copy to clipboard';
+                    }, 2000);
+                });
+            });
         }
         
+        // Enhanced search functionality
         searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            
-            if (searchTerm === '') {
-                renderCommands(commands);
-                return;
-            }
-            
-            const filteredCommands = commands.filter(cmd => 
-                cmd.name.toLowerCase().includes(searchTerm) || 
-                cmd.description.toLowerCase().includes(searchTerm) ||
-                cmd.syntax.toLowerCase().includes(searchTerm) ||
-                cmd.category.toLowerCase().includes(searchTerm) ||
-                cmd.permission.toLowerCase().includes(searchTerm)
-            );
-            
-            renderCommands(filteredCommands);
+            currentSearchTerm = searchInput.value.toLowerCase().trim();
+            applyFilters();
         });
         
         // Add visual feedback when search input is focused
@@ -412,8 +772,11 @@
             searchInput.parentElement.classList.remove('search-focused');
         });
         
-        renderCommands();
+        // Initialize the app
+        initCategoryFilters();
+        applyFilters();
         
+        // Add subtle typing effect to the search placeholder
         const searchPlaceholders = [
             "Search commands by name...",
             "Search by description...",
