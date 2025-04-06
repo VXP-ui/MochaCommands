@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Commands Reference</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        'primary-dark': '#4A49B0',
+                        'primary-light': '#7776E5',
+                        dark: {
+                            900: '#121212',
+                            800: '#1E1E1E',
+                            700: '#2D2D2D',
+                            600: '#383838',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(93, 92, 222, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(93, 92, 222, 0.8), 0 0 30px rgba(93, 92, 222, 0.6)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .command-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .command-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right, 
+                rgba(93, 92, 222, 0), 
+                rgba(93, 92, 222, 0.1), 
+                rgba(93, 92, 222, 0)
+            );
+            transform: rotate(30deg);
+            opacity: 0;
+            transition: transform 0.7s ease, opacity 0.7s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .command-card:hover::before {
+            transform: rotate(30deg) translate(0%, 0%);
+            opacity: 1;
+        }
+        
+        .command-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(93, 92, 222, 0.3);
+        }
+        
+        @keyframes neon-pulse {
+            0%, 100% { text-shadow: 0 0 5px rgba(93, 92, 222, 0.5), 0 0 10px rgba(93, 92, 222, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(93, 92, 222, 0.8), 0 0 30px rgba(93, 92, 222, 0.5); }
+        }
+        
+        .neon-text {
+            animation: neon-pulse 2s ease-in-out infinite;
+        }
+        
+        .search-bar {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .search-bar:focus-within::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 0.5rem;
+            background: linear-gradient(45deg, #5D5CDE, #7776E5, #4A49B0);
+            z-index: -1;
+            animation: search-glow 1.5s linear infinite;
+        }
+        
+        @keyframes search-glow {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1E1E1E;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #5D5CDE;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4A49B0;
+        }
+        
+        /* Animation delays for staggered appearance */
+        .command-card:nth-child(1) { animation-delay: 0.1s; }
+        .command-card:nth-child(2) { animation-delay: 0.2s; }
+        .command-card:nth-child(3) { animation-delay: 0.3s; }
+        .command-card:nth-child(4) { animation-delay: 0.4s; }
+        .command-card:nth-child(5) { animation-delay: 0.5s; }
+        .command-card:nth-child(6) { animation-delay: 0.6s; }
+        .command-card:nth-child(7) { animation-delay: 0.7s; }
+    </style>
+</head>
+<body class="bg-dark-900 text-gray-200 min-h-screen transition-colors duration-200">
+    <!-- Force dark mode -->
+    <script>
+        document.documentElement.classList.add('dark');
+    </script>
+    
+    <!-- Background particles -->
+    <div id="particles-js" class="fixed inset-0 z-0 opacity-30"></div>
+
+    <div class="container mx-auto px-4 py-8 max-w-4xl relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-10 animate-float">
+            <h1 class="text-5xl font-bold text-white mb-4 neon-text">Bot Commands</h1>
+            <p class="text-xl text-gray-300">Your comprehensive command reference</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="mb-10 relative search-bar">
+            <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search commands by name, description, or syntax..." 
+                class="w-full pl-12 pr-4 py-4 rounded-lg border-2 border-dark-600 bg-dark-800 text-white text-base focus:outline-none focus:border-primary transition-all duration-300">
+            <div id="searchStats" class="mt-2 text-sm text-gray-400 hidden">
+                Showing <span id="resultCount">0</span> of <span id="totalCount">0</span> commands
+            </div>
+        </div>
+
+        <!-- Commands List -->
+        <div class="space-y-6" id="commandsList">
+            <!-- Commands will be populated here -->
+        </div>
+    </div>
+
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS("particles-js", {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#5D5CDE" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#5D5CDE",
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "grab" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    },
+                    modes: {
+                        grab: { distance: 140, line_linked: { opacity: 0.5 } },
+                        push: { particles_nb: 4 }
+                    }
+                },
+                retina_detect: true
+            });
+        });
+
+        // Bot commands data
+        const commands = [
+            {
+                name: "!timeout",
+                syntax: "!timeout @user [duration] [reason]",
+                description: "Temporarily restricts a user from sending messages or interacting in the server.",
+                example: "!timeout @User#1234 1h Spamming",
+                permission: "Manage Messages",
+                category: "moderation"
+            },
+            {
+                name: "!untimeout",
+                syntax: "!untimeout @user",
+                description: "Removes an active timeout from a user, restoring their ability to send messages.",
+                example: "!untimeout @User#1234",
+                permission: "Manage Messages",
+                category: "moderation"
+            },
+            {
+                name: "!ping",
+                syntax: "!ping",
+                description: "Checks the bot's response time and connection status.",
+                example: "!ping",
+                permission: "None",
+                category: "utility"
+            },
+            {
+                name: "!ban",
+                syntax: "!ban @user [reason]",
+                description: "Permanently removes a user from the server. They cannot rejoin unless unbanned.",
+                example: "!ban @User#1234 Violation of server rules",
+                permission: "Ban Members",
+                category: "moderation"
+            },
+            {
+                name: "!unban",
+                syntax: "!unban @user or user_id",
+                description: "Removes a ban on a user, allowing them to rejoin the server.",
+                example: "!unban @User#1234",
+                permission: "Ban Members",
+                category: "moderation"
+            },
+            {
+                name: "!softban",
+                syntax: "!softban @user [reason]",
+                description: "Bans and immediately unbans a user, effectively removing them from the server while deleting their recent messages.",
+                example: "!softban @User#1234 Inappropriate messages",
+                permission: "Ban Members",
+                category: "moderation"
+            },
+            {
+                name: "!kick",
+                syntax: "!kick @user [reason]",
+                description: "Removes a user from the server. Unlike a ban, they can rejoin with a new invite.",
+                example: "!kick @User#1234 Disruptive behavior",
+                permission: "Kick Members",
+                category: "moderation"
+            }
+        ];
+
+        // DOM elements
+        const commandsList = document.getElementById('commandsList');
+        const searchInput = document.getElementById('searchInput');
+        const searchStats = document.getElementById('searchStats');
+        const resultCount = document.getElementById('resultCount');
+        const totalCount = document.getElementById('totalCount');
+        
+        // Render commands with animation delay for staggered appearance
+        function renderCommands(filteredCommands = commands) {
+            commandsList.innerHTML = '';
+            
+            // Update search stats
+            if (searchInput.value.trim() !== '') {
+                searchStats.classList.remove('hidden');
+                resultCount.textContent = filteredCommands.length;
+                totalCount.textContent = commands.length;
+            } else {
+                searchStats.classList.add('hidden');
+            }
+            
+            if (filteredCommands.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.className = 'text-center p-8 bg-dark-800 rounded-lg border-2 border-dark-700 animate-fade-in';
+                noResults.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="text-gray-400 text-lg">No commands match your search.</p>
+                    <button id="clearSearchBtn" class="mt-4 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors">
+                        Clear Search
+                    </button>
+                `;
+                commandsList.appendChild(noResults);
+                
+                // Add event listener to the clear button
+                document.getElementById('clearSearchBtn').addEventListener('click', () => {
+                    searchInput.value = '';
+                    renderCommands(commands);
+                    searchInput.focus();
+                });
+                
+                return;
+            }
+            
+            filteredCommands.forEach((cmd, index) => {
+                const cmdCard = document.createElement('div');
+                cmdCard.className = 'command-card bg-dark-800 rounded-lg shadow-md overflow-hidden transition-all relative z-10';
+                cmdCard.style.animationDelay = `${index * 0.1}s`;
+                
+                const header = document.createElement('div');
+                header.className = 'bg-primary px-5 py-4 text-white flex justify-between items-center';
+                
+                const nameContainer = document.createElement('div');
+                nameContainer.innerHTML = `
+                    <h3 class="text-xl font-bold">${cmd.name}</h3>
+                    <span class="text-xs opacity-80 uppercase tracking-wider">${cmd.category}</span>
+                `;
+                
+                const permissionBadge = document.createElement('div');
+                permissionBadge.className = `text-xs px-2 py-1 rounded-full ${
+                    cmd.permission === 'None' ? 'bg-green-500' : 
+                    cmd.permission.includes('Ban') ? 'bg-red-500' : 
+                    'bg-yellow-500'
+                }`;
+                permissionBadge.textContent = cmd.permission;
+                
+                header.appendChild(nameContainer);
+                header.appendChild(permissionBadge);
+                
+                const body = document.createElement('div');
+                body.className = 'p-5';
+                
+                const syntaxDiv = document.createElement('div');
+                syntaxDiv.className = 'mb-4';
+                syntaxDiv.innerHTML = `
+                    <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-1">Syntax</h4>
+                    <code class="block bg-dark-900 p-3 rounded text-primary font-mono text-sm border border-dark-700">${cmd.syntax}</code>
+                `;
+                
+                const descDiv = document.createElement('div');
+                descDiv.className = 'mb-4';
+                descDiv.innerHTML = `
+                    <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-1">Description</h4>
+                    <p class="text-gray-300">${cmd.description}</p>
+                `;
+                
+                const exampleDiv = document.createElement('div');
+                exampleDiv.className = 'mb-4';
+                exampleDiv.innerHTML = `
+                    <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-1">Example</h4>
+                    <code class="block bg-dark-900 p-3 rounded text-green-400 font-mono text-sm border border-dark-700">${cmd.example}</code>
+                `;
+                
+                body.appendChild(syntaxDiv);
+                body.appendChild(descDiv);
+                body.appendChild(exampleDiv);
+                
+                cmdCard.appendChild(header);
+                cmdCard.appendChild(body);
+                
+                commandsList.appendChild(cmdCard);
+            });
+        }
+        
+        // Enhanced search functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            // If search is empty, show all commands
+            if (searchTerm === '') {
+                renderCommands(commands);
+                return;
+            }
+            
+            // Filter commands with highlighted matches
+            const filteredCommands = commands.filter(cmd => 
+                cmd.name.toLowerCase().includes(searchTerm) || 
+                cmd.description.toLowerCase().includes(searchTerm) ||
+                cmd.syntax.toLowerCase().includes(searchTerm) ||
+                cmd.category.toLowerCase().includes(searchTerm) ||
+                cmd.permission.toLowerCase().includes(searchTerm)
+            );
+            
+            renderCommands(filteredCommands);
+        });
+        
+        // Add visual feedback when search input is focused
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('search-focused');
+        });
+        
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('search-focused');
+        });
+        
+        // Initial render
+        renderCommands();
+        
+        // Add subtle typing effect to the search placeholder
+        const searchPlaceholders = [
+            "Search commands by name...",
+            "Search by description...",
+            "Search by syntax...",
+            "Search by permission...",
+            "Search by category..."
+        ];
+        
+        let placeholderIndex = 0;
+        setInterval(() => {
+            searchInput.placeholder = searchPlaceholders[placeholderIndex];
+            placeholderIndex = (placeholderIndex + 1) % searchPlaceholders.length;
+        }, 3000);
+    </script>
+</body>
+</html>
