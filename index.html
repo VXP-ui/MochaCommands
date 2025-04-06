@@ -491,11 +491,47 @@
                 icon: "fa-user-check"
             },
             {
-                name: "warns remove",
-                syntax: "warns remove [warn ID]",
+                name: "warnsremove",
+                syntax: "warnsremove [warn ID]",
                 description: "Remove a users warnings",
-                example: "warns remove @User#1234 [warn ID]",
+                example: "warnsremove @User#1234 [warn ID]",
                 permission: "Manage Messages",
+                category: "moderation",
+                icon: "fa-user-check"
+            },
+            {
+                name: "lockdown",
+                syntax: "lockdown [channel]",
+                description: "lockdown a channel",
+                example: "lockdown [channel]",
+                permission: "Manage Channels",
+                category: "moderation",
+                icon: "fa-user-check"
+            },
+              {
+                name: "unlock",
+                syntax: "unlock [channel]",
+                description: "unlock a channel",
+                example: "unlock [channel]",
+                permission: "Manage Channels",
+                category: "moderation",
+                icon: "fa-user-check"
+            },
+              {
+                name: "lockdownall",
+                syntax: "lockdownall [channel]",
+                description: "lockdown all channels",
+                example: "lockdownall [channel]",
+                permission: "Manage Channels",
+                category: "moderation",
+                icon: "fa-user-check"
+            },
+              {
+                name: "unlockall",
+                syntax: "unlockall [channel]",
+                description: "unlock all channels",
+                example: "unlock [channel]",
+                permission: "Manage Channels",
                 category: "moderation",
                 icon: "fa-user-check"
             },
