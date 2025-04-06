@@ -535,6 +535,69 @@
                 category: "server",
                 icon: "fa-user-check"
             },
+            {
+                name: "add-global-permissions",
+                syntax: "add-global-permission [permission]",
+                description: "Globally add a permission for your server",
+                example: "add-global-permission [permission]",
+                permission: "Manage Roles",
+                category: "server",
+                icon: "fa-user-check"
+            },
+             {
+                name: "remove-global-permissions",
+                syntax: "remove-global-permission [permission]",
+                description: "Globally remove a permission for your server",
+                example: "remove-global-permission [permission]",
+                permission: "Manage Roles",
+                category: "server",
+                icon: "fa-user-check"
+            },
+            {
+                name: "create-role",
+                syntax: "create-role @role name [perm]",
+                description: "create a role",
+                example: "create-role @role name [perm]",
+                permission: "Manage Roles",
+                category: "moderation",
+                icon: "fa-user-check"
+             },
+            {
+                name: "delete-role",
+                syntax: "delete-role @role name",
+                description: "delete a role",
+                example: "delete-role @role name",
+                permission: "Manage Roles",
+                category: "moderation",
+                icon: "fa-user-check"
+             },
+            {
+                name: "role-add",
+                syntax: "role-add @role name @user123",
+                description: "give a role",
+                example: "role-add @role name [@user123",
+                permission: "Manage Roles",
+                category: "moderation",
+                icon: "fa-user-check"
+             },
+                {
+                name: "role-remove",
+                syntax: "role-remove @role name @user123",
+                description: "remove a role",
+                example: "role-remove @role name [@user123",
+                permission: "Manage Roles",
+                category: "moderation",
+                icon: "fa-user-check"
+             },
+                {
+                name: "role-edit-permission",
+                syntax: "role-edit-permissions @role name @user123",
+                description: "edit a role or two",
+                example: "role-edit-permission @role name [@user123",
+                permission: "Manage Roles",
+                category: "moderation",
+                icon: "fa-user-check"
+             },
         ];
 
         // DOM elements
