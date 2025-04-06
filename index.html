@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot Commands Reference</title>
+    <title>Mocha Commands Reference</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
@@ -123,7 +123,6 @@
             100% { opacity: 0.5; }
         }
         
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -141,7 +140,6 @@
             background: #4A49B0;
         }
         
-        /* Animation delays for staggered appearance */
         .command-card:nth-child(1) { animation-delay: 0.1s; }
         .command-card:nth-child(2) { animation-delay: 0.2s; }
         .command-card:nth-child(3) { animation-delay: 0.3s; }
@@ -152,22 +150,20 @@
     </style>
 </head>
 <body class="bg-dark-900 text-gray-200 min-h-screen transition-colors duration-200">
-    <!-- Force dark mode -->
+
     <script>
         document.documentElement.classList.add('dark');
     </script>
-    
-    <!-- Background particles -->
+
     <div id="particles-js" class="fixed inset-0 z-0 opacity-30"></div>
 
     <div class="container mx-auto px-4 py-8 max-w-4xl relative z-10">
-        <!-- Header -->
+
         <div class="text-center mb-10 animate-float">
-            <h1 class="text-5xl font-bold text-white mb-4 neon-text">Bot Commands</h1>
-            <p class="text-xl text-gray-300">Your comprehensive command reference</p>
+            <h1 class="text-5xl font-bold text-white mb-4 neon-text">Mocha Commands</h1>
+            <p class="text-xl text-gray-300">Your comprehensive command references for Mocha!</p>
         </div>
 
-        <!-- Search Bar -->
         <div class="mb-10 relative search-bar">
             <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -181,14 +177,13 @@
             </div>
         </div>
 
-        <!-- Commands List -->
         <div class="space-y-6" id="commandsList">
-            <!-- Commands will be populated here -->
+
         </div>
     </div>
 
     <script>
-        // Initialize particles.js
+
         document.addEventListener('DOMContentLoaded', function() {
             particlesJS("particles-js", {
                 particles: {
@@ -230,7 +225,6 @@
             });
         });
 
-        // Bot commands data
         const commands = [
             {
                 name: "!timeout",
@@ -290,18 +284,15 @@
             }
         ];
 
-        // DOM elements
         const commandsList = document.getElementById('commandsList');
         const searchInput = document.getElementById('searchInput');
         const searchStats = document.getElementById('searchStats');
         const resultCount = document.getElementById('resultCount');
         const totalCount = document.getElementById('totalCount');
         
-        // Render commands with animation delay for staggered appearance
         function renderCommands(filteredCommands = commands) {
             commandsList.innerHTML = '';
             
-            // Update search stats
             if (searchInput.value.trim() !== '') {
                 searchStats.classList.remove('hidden');
                 resultCount.textContent = filteredCommands.length;
@@ -324,7 +315,6 @@
                 `;
                 commandsList.appendChild(noResults);
                 
-                // Add event listener to the clear button
                 document.getElementById('clearSearchBtn').addEventListener('click', () => {
                     searchInput.value = '';
                     renderCommands(commands);
@@ -394,17 +384,14 @@
             });
         }
         
-        // Enhanced search functionality
         searchInput.addEventListener('input', () => {
             const searchTerm = searchInput.value.toLowerCase().trim();
             
-            // If search is empty, show all commands
             if (searchTerm === '') {
                 renderCommands(commands);
                 return;
             }
             
-            // Filter commands with highlighted matches
             const filteredCommands = commands.filter(cmd => 
                 cmd.name.toLowerCase().includes(searchTerm) || 
                 cmd.description.toLowerCase().includes(searchTerm) ||
@@ -425,10 +412,8 @@
             searchInput.parentElement.classList.remove('search-focused');
         });
         
-        // Initial render
         renderCommands();
         
-        // Add subtle typing effect to the search placeholder
         const searchPlaceholders = [
             "Search commands by name...",
             "Search by description...",
