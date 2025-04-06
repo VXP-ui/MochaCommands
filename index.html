@@ -410,44 +410,44 @@
         // Bot commands data
         const commands = [
             {
-                name: "!timeout",
-                syntax: "!timeout @user [duration] [reason]",
+                name: "timeout",
+                syntax: "timeout @user [duration] [reason]",
                 description: "Temporarily restricts a user from sending messages or interacting in the server.",
-                example: "!timeout @User#1234 1h Spamming",
+                example: "timeout @User#1234 1h Spamming",
                 permission: "Timeout Members",
                 category: "moderation",
                 icon: "fa-user-clock"
             },
             {
-                name: "!untimeout",
-                syntax: "!untimeout @user",
+                name: "untimeout",
+                syntax: "untimeout @user",
                 description: "Removes an active timeout from a user, restoring their ability to send messages.",
-                example: "!untimeout @User#1234",
+                example: "untimeout @User#1234",
                 permission: "Timeout Members",
                 category: "moderation",
                 icon: "fa-user-check"
             },
             {
-                name: "!ping",
-                syntax: "!ping",
+                name: "ping",
+                syntax: "ping",
                 description: "Checks the bot's response time and connection status.",
-                example: "!ping",
+                example: "ping",
                 permission: "None",
                 category: "utility",
                 icon: "fa-network-wired"
             },
             {
-                name: "!ban",
-                syntax: "!ban @user [reason]",
+                name: "ban",
+                syntax: "ban @user [reason]",
                 description: "Permanently removes a user from the server. They cannot rejoin unless unbanned.",
-                example: "!ban @User#1234 Violation of server rules",
+                example: "ban @User#1234 Violation of server rules",
                 permission: "Ban Members",
                 category: "moderation",
                 icon: "fa-gavel"
             },
             {
-                name: "!unban",
-                syntax: "!unban @user or user_id",
+                name: "unban",
+                syntax: "unban @user or user_id",
                 description: "Removes a ban on a user, allowing them to rejoin the server.",
                 example: "!unban @User#1234",
                 permission: "Ban Members",
@@ -455,19 +455,19 @@
                 icon: "fa-user-plus"
             },
             {
-                name: "!softban",
-                syntax: "!softban @user [reason]",
+                name: "softban",
+                syntax: "softban @user [reason]",
                 description: "Bans and immediately unbans a user, effectively removing them from the server while deleting their recent messages.",
-                example: "!softban @User#1234 Inappropriate messages",
+                example: "softban @User#1234 Inappropriate messages",
                 permission: "Ban Members",
                 category: "moderation",
                 icon: "fa-ban"
             },
             {
-                name: "!kick",
-                syntax: "!kick @user [reason]",
+                name: "kick",
+                syntax: "kick @user [reason]",
                 description: "Removes a user from the server. Unlike a ban, they can rejoin with a new invite.",
-                example: "!kick @User#1234 Disruptive behavior",
+                example: "kick @User#1234 Disruptive behavior",
                 permission: "Kick Members",
                 category: "moderation",
                 icon: "fa-user-minus"
