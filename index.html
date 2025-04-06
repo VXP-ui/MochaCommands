@@ -426,7 +426,7 @@
                 permission: "Timeout Members",
                 category: "moderation",
                 icon: "fa-user-check"
-            },
+            },   
             {
                 name: "ping",
                 syntax: "ping",
@@ -471,7 +471,34 @@
                 permission: "Kick Members",
                 category: "moderation",
                 icon: "fa-user-minus"
-            }
+            },
+              {
+                name: "warn",
+                syntax: "warn @user [reason]",
+                description: "Warn a user",
+                example: "warn @User#1234",
+                permission: "Manage Messages",
+                category: "moderation",
+                icon: "fa-user-check"
+             },
+          {
+                name: "warns",
+                syntax: "warns",
+                description: "View a users warnings",
+                example: "warns @User#1234",
+                permission: "Manage Messages",
+                category: "moderation",
+                icon: "fa-user-check"
+            },
+            {
+                name: "warns remove",
+                syntax: "warns remove [warn ID]",
+                description: "Remove a users warnings",
+                example: "warns remove @User#1234 [warn ID]",
+                permission: "Manage Messages",
+                category: "moderation",
+                icon: "fa-user-check"
+            },
         ];
 
         // DOM elements
