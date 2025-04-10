@@ -987,10 +987,10 @@
                     <div class="p-4 dark:bg-dark-800 light:bg-light-800">
                         <p class="dark:text-gray-400 light:text-gray-600 mb-3 text-sm">Popular commands:</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>setup</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>welcome</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>config</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>channels</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>autorole</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>embed</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>channel info</span>
+                            
                         </div>
                         <button class="view-button block w-full mt-4 text-center py-2 dark:bg-dark-700 dark:hover:bg-dark-600 light:bg-light-700 light:hover:bg-light-600 dark:text-white light:text-gray-800 rounded-md transition-colors">
                             View All Server Commands
@@ -1022,9 +1022,8 @@
                     <div class="p-4 dark:bg-dark-800 light:bg-light-800">
                         <p class="dark:text-gray-400 light:text-gray-600 mb-3 text-sm">Popular commands:</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>role</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>perms</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>logs</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>role all</span>
+                            
                             <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>backup</span>
                         </div>
                         <button class="view-button block w-full mt-4 text-center py-2 dark:bg-dark-700 dark:hover:bg-dark-600 light:bg-light-700 light:hover:bg-light-600 dark:text-white light:text-gray-800 rounded-md transition-colors">
@@ -1057,12 +1056,12 @@
                     <div class="p-4 dark:bg-dark-800 light:bg-light-800">
                         <p class="dark:text-gray-400 light:text-gray-600 mb-3 text-sm">Popular commands:</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>meme</span>
+                            
                             <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>8ball</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>joke</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>trivia</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>poll</span>
-                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>gif</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>remind</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>shout</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>dice</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>rps</span>
                         </div>
                         <button class="view-button block w-full mt-4 text-center py-2 dark:bg-dark-700 dark:hover:bg-dark-600 light:bg-light-700 light:hover:bg-light-600 dark:text-white light:text-gray-800 rounded-md transition-colors">
                             View All Fun Commands
@@ -1448,6 +1447,112 @@
                             { name: "role", description: "Role to assign to new members", required: true }
                         ] 
                     },
+                    { 
+                        name: "add-global-permissiontorole", 
+                        description: "Add a specific permission for everyone in the server.", 
+                        params: [
+                            { name: "Meow", description: "The permission to add to everyone", required: true }
+                        ] 
+                    },
+                    
+                    { 
+                        name: "Channel info", 
+                        description: "View info about a channel/vc channel", 
+                        params: [
+                            { name: "channelinfo", description: "mmm..kfu is so hot...~", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "Create Channel", 
+                        description: "Create a channel", 
+                        params: [
+                            { name: "name", description: "channel", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "create thread", 
+                        description: "create a thread", 
+                        params: [
+                            { name: "name", description: "thread", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "delete thread", 
+                        description: "delete a thread", 
+                        params: [
+                            { name: "thread", description: "delete", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "editchannelname", 
+                        description: "edit a channels name", 
+                        params: [
+                            { name: "Channel", description: "Name", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "editthread", 
+                        description: "edit a threads contents", 
+                        params: [
+                            { name: "thread", description: "edit", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "embed", 
+                        description: "make an embed", 
+                        params: [
+                            { name: "", description: "", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "listautoresponses", 
+                        description: "lists all the auto responses you've set up", 
+                        params: [
+                            { name: "name", description: "", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "lockthread", 
+                        description: "lock a thread", 
+                        params: [
+                            { name: "thread", description: "", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "move channel", 
+                        description: "move a channel to another category", 
+                        params: [
+                            { name: "", description: "", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "remove-global-perms", 
+                        description: "remove a permission for everyone in the server", 
+                        params: [
+                            { name: "", description: "", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "remove auto responses", 
+                        description: "remove an auto response you've set up", 
+                        params: [
+                            { name: "", description: "", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "renamethread", 
+                        description: "rename a thread", 
+                        params: [
+                            { name: "", description: "", required: true }
+                        ] 
+                    }, 
+                    { 
+                        name: "setautoresponse", 
+                        description: "set an auto response", 
+                        params: [
+                            { name: "", description: "", required: true }
+                        ] 
+                    },
                 ]
             },
             {
@@ -1457,16 +1562,8 @@
                 icon: "fa-user-cog",
                 gradient: "gradient-management",
                 commandCount: 9,
-                popularCommands: ["/role", "/perms", "/logs", "/backup", "/purge"],
+                popularCommands: ["/edit role", "/create role"],
                 commands: [
-                    { 
-                        name: "logs", 
-                        description: "View server logs", 
-                        params: [
-                            { name: "count", description: "Number of log entries to show", required: false },
-                            { name: "type", description: "Type of logs to show", required: false }
-                        ] 
-                    },
                     { 
                         name: "backup", 
                         description: "Create or load a server backup", 
@@ -1475,15 +1572,134 @@
                             { name: "id", description: "Backup ID for load action", required: false }
                         ] 
                     },
-                    { 
-                        name: "announce", 
-                        description: "Send an announcement", 
-                        params: [
-                            { name: "channel", description: "Channel to send announcement to", required: true },
-                            { name: "message", description: "Announcement message", required: true },
-                            { name: "ping", description: "Role to ping with announcement", required: false }
-                        ] 
-                    }
+                    {
+    name: "create-role",
+    description: "Creates a new role in the server.",
+    params: [
+        { name: "role_name", description: "The name of the role to create", required: true }
+    ]
+},
+{
+    name: "delete-role",
+    description: "Deletes a role from the server.",
+    params: [
+        { name: "role", description: "The role to delete", required: true }
+    ]
+},
+{
+    name: "editrolecolour",
+    description: "Edits the color of a specified role.",
+    params: [
+        { name: "role", description: "The role to edit", required: true },
+        { name: "color", description: "The new color (hex or name)", required: true }
+    ]
+},
+{
+    name: "editrolename",
+    description: "Changes the name of a specified role.",
+    params: [
+        { name: "role", description: "The role to rename", required: true },
+        { name: "new_name", description: "The new name for the role", required: true }
+    ]
+},
+{
+    name: "givebotroles",
+    description: "Gives the specified roles to the bot.",
+    params: [
+        { name: "role", description: "The role to give to the bot", required: true }
+    ]
+},
+{
+    name: "removebotrole",
+    description: "Removes a role from the bot.",
+    params: [
+        { name: "role", description: "The role to remove from the bot", required: true }
+    ]
+},
+{
+    name: "role-add",
+    description: "Adds a role to a user.",
+    params: [
+        { name: "user", description: "The user to give the role to", required: true },
+        { name: "role", description: "The role to add", required: true }
+    ]
+},
+{
+    name: "role-edit-perms",
+    description: "Edits the permissions of a role.",
+    params: [
+        { name: "role", description: "The role to edit", required: true },
+        { name: "permissions", description: "The new permissions", required: true }
+    ]
+},
+{
+    name: "role-info",
+    description: "Displays information about a role.",
+    params: [
+        { name: "role", description: "The role to inspect", required: true }
+    ]
+},
+{
+    name: "role-remove",
+    description: "Removes a role from a user.",
+    params: [
+        { name: "user", description: "The user to remove the role from", required: true },
+        { name: "role", description: "The role to remove", required: true }
+    ]
+},
+{
+    name: "roleall",
+    description: "Gives a role to everyone in the server.",
+    params: [
+        { name: "role", description: "The role to give", required: true }
+    ]
+},
+{
+    name: "rolehoist",
+    description: "Toggles the hoist (display separately) setting for a role.",
+    params: [
+        { name: "role", description: "The role to hoist/unhoist", required: true },
+        { name: "state", description: "True to hoist, false to unhoist", required: true }
+    ]
+},
+{
+    name: "roleiconadd",
+    description: "Adds an icon to a role.",
+    params: [
+        { name: "role", description: "The role to add the icon to", required: true },
+        { name: "icon_url", description: "The URL of the icon image", required: true }
+    ]
+},
+{
+    name: "roleiconremove",
+    description: "Removes the icon from a role.",
+    params: [
+        { name: "role", description: "The role to remove the icon from", required: true }
+    ]
+},
+{
+    name: "roleremoveall",
+    description: "Removes all roles from a specified user.",
+    params: [
+        { name: "user", description: "The user whose roles will be removed", required: true }
+    ]
+},
+{
+    name: "roleunhoist",
+    description: "Unhoists a role (hides it from member list).",
+    params: [
+        { name: "role", description: "The role to unhoist", required: true }
+    ]
+},
+{
+    name: "viewperms",
+    description: "Shows the permissions of a specific role or user.",
+    params: [
+        { name: "target", description: "The role or user to view permissions for", required: true }
+    ]
+}
+
+
                 ]
             },
             {
@@ -1493,64 +1709,154 @@
                 icon: "fa-gamepad",
                 gradient: "gradient-fun",
                 commandCount: 15,
-                popularCommands: ["/meme", "/8ball", "/joke", "/trivia", "/poll", "/gif", "/quote"],
+                popularCommands: ["/quote", "/8ball"],
                 commands: [
-                    { 
-                        name: "8ball", 
-                        description: "Ask the magic 8-ball a question", 
-                        params: [
-                            { name: "question", description: "Question to ask", required: true }
-                        ] 
-                    },  
-                    { 
-                        name: "quote", 
-                        description: "Quote a user's message", 
-                        params: [
-                            { name: "user", description: "User to quote", required: false },
-                            { name: "message_id", description: "Specific message ID to quote", required: false }
-                        ] 
-                    },
-                    { 
-                        name: "roll", 
-                        description: "Roll a random number", 
-                        params: [
-                            { name: "max", description: "Maximum number (default 100)", required: false }
-                        ] 
-                    },
-                    { 
-                        name: "coinflip", 
-                        description: "Flip a coin", 
-                        params: [] 
-                    },
-                    { 
-                        name: "rps", 
-                        description: "Play rock, paper, scissors", 
-                        params: [
-                            { name: "choice", description: "Your choice (rock, paper, scissors)", required: true }
-                        ] 
-                    },
-                    { 
-                        name: "ascii", 
-                        description: "Convert text to ASCII art", 
-                        params: [
-                            { name: "text", description: "Text to convert", required: true },
-                            { name: "font", description: "ASCII art font", required: false }
-                        ] 
-                    },
-                    { 
-                        name: "fact", 
-                        description: "Get a random fact", 
-                        params: [
-                            { name: "category", description: "Fact category", required: false }
-                        ] 
-                    },
-                    { 
-                        name: "say", 
-                        description: "Make the bot say something", 
-                        params: [
-                            { name: "message", description: "Message to say", required: true }
-                        ] 
-                    }
+            
+                {
+    name: "8ball",
+    description: "Ask the magic 8-ball a question.",
+    params: [
+        { name: "question", description: "Your question to the 8-ball", required: true }
+    ]
+},
+{
+    name: "coinflip",
+    description: "Flips a coin and returns heads or tails.",
+    params: []
+},
+{
+    name: "rps",
+    description: "Play rock-paper-scissors against the bot.",
+    params: [
+        { name: "choice", description: "Your choice: rock, paper, or scissors", required: true }
+    ]
+},
+{
+    name: "dice",
+    description: "Rolls a dice and returns a random number between 1 and 6.",
+    params: []
+},
+{
+    name: "getavatar",
+    description: "Shows the avatar of a user.",
+    params: [
+        { name: "user", description: "The user whose avatar you want to view", required: true }
+    ]
+},
+{
+    name: "truthordare",
+    description: "Returns a random truth or dare challenge.",
+    params: [
+        { name: "type", description: "Choose between 'truth' or 'dare'", required: true }
+    ]
+},
+
+                    {
+    name: "fake_delete",
+    description: "Pretends to delete the server by hiding all channels temporarily.",
+    params: []
+},
+{
+    name: "fakeban",
+    description: "Sends a fake ban message to prank someone.",
+    params: [
+        { name: "user", description: "The user to fake ban", required: true }
+    ]
+},
+{
+    name: "fakekick",
+    description: "Sends a fake kick message to prank someone.",
+    params: [
+        { name: "user", description: "The user to fake kick", required: true }
+    ]
+},
+{
+    name: "gayrate",
+    description: "Rates how gay someone is (for fun).",
+    params: [
+        { name: "user", description: "The user to rate", required: true }
+    ]
+},
+{
+    name: "lesbianrate",
+    description: "Rates how lesbian someone is (for fun).",
+    params: [
+        { name: "user", description: "The user to rate", required: true }
+    ]
+},
+{
+    name: "ping",
+    description: "Returns bot latency.",
+    params: []
+},
+{
+    name: "quote",
+    description: "Returns a random quote or lets you add/view quotes.",
+    params: [
+        { name: "action", description: "The action to perform (view/add)", required: true },
+        { name: "text", description: "The quote text (if adding)", required: false }
+    ]
+},
+{
+    name: "ratemyusername",
+    description: "Rates your username from 1 to 10.",
+    params: []
+},
+{
+    name: "ratesmth",
+    description: "Rates anything you input (1–100%).",
+    params: [
+        { name: "thing", description: "The thing you want to be rated", required: true }
+    ]
+},
+{
+    name: "ratesomeone",
+    description: "Rates a user from 1 to 10.",
+    params: [
+        { name: "user", description: "The user you want to rate", required: true }
+    ]
+},
+{
+    name: "remind",
+    description: "Sets a reminder.",
+    params: [
+        { name: "time", description: "When to remind you (e.g. 10m, 2h)", required: true },
+        { name: "message", description: "What to remind you about", required: true }
+    ]
+},
+{
+    name: "say/sayv2",
+    description: "say things.",
+    params: [
+        { name: "message", description: "what you want the bot to say", required: true },
+        { name: "message", description: "What to remind you about", required: false }
+    ]
+},
+{
+    name: "shout",
+    description: "Capitalize everything.",
+    params: [
+        { name: "message", description: "what you want the bot to say", required: true },
+        { name: "message", description: "", required: false }
+    ]
+},
+{
+    name: "bandosocial",
+    description: "bando's socials",
+    params: [
+        { name: "user", description: "bando's socials", required: true },
+        { name: "reason", description: "The reason for banning the user", required: false }
+    ]
+},
+{
+    name: "kfusocial",
+    description: "kfu's socials",
+    params: [
+        { name: "user", description: "", required: false }
+    ]
+}
+
+
                 ]
             }
         ];
