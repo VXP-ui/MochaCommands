@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-<head> 
-    <link rel="icon" type="image/png" href="favicon.ico" />
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mocha Commands</title>
+    <title>Exovyn Mocha - Commands Reference</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -14,39 +14,80 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#5D5CDE',
-                        'primary-dark': '#4A49B0',
-                        'primary-light': '#7776E5',
+                        primary: {
+                            DEFAULT: '#5D5CDE',
+                            dark: '#4A49B0',
+                            light: '#7776E5',
+                            lighter: '#9999FF',
+                        },
                         dark: {
                             900: '#121212',
                             800: '#1E1E1E',
                             700: '#2D2D2D',
                             600: '#383838',
+                        },
+                        light: {
+                            900: '#FFFFFF',
+                            800: '#F8F9FA',
+                            700: '#E9ECEF',
+                            600: '#DEE2E6',
                         }
                     },
                     animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'float': 'float 6s ease-in-out infinite',
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
-                        'shimmer': 'shimmer 2s infinite linear',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                        'float': 'float 8s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'count-up': 'countUp 1.5s ease-out forwards',
+                        'sway': 'sway 6s ease-in-out infinite',
+                        'scale-pulse': 'scalePulse 3s infinite',
+                        'title-reveal': 'titleReveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards',
+                        'letter-appear': 'letterAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        'bounce-in': 'bounceIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards',
+                        'bg-shift': 'bgShift 15s ease infinite',
                     },
                     keyframes: {
                         glow: {
-                            '0%': { boxShadow: '0 0 5px rgba(93, 92, 222, 0.5)' },
-                            '100%': { boxShadow: '0 0 20px rgba(93, 92, 222, 0.8), 0 0 30px rgba(93, 92, 222, 0.6)' }
+                            '0%': { boxShadow: '0 0 5px rgba(93, 92, 222, 0.3)' },
+                            '100%': { boxShadow: '0 0 15px rgba(93, 92, 222, 0.5), 0 0 20px rgba(93, 92, 222, 0.3)' }
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' }
+                            '50%': { transform: 'translateY(-8px)' }
                         },
                         fadeIn: {
                             '0%': { opacity: '0', transform: 'translateY(10px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' }
                         },
-                        shimmer: {
-                            '0%': { backgroundPosition: '-1000px 0' },
-                            '100%': { backgroundPosition: '1000px 0' }
+                        countUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        sway: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        },
+                        scalePulse: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' }
+                        },
+                        titleReveal: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        letterAppear: {
+                            '0%': { opacity: '0', transform: 'translateY(15px) rotate(10deg) scale(0.8)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) rotate(0) scale(1)' }
+                        },
+                        bounceIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.8)' },
+                            '40%': { opacity: '1', transform: 'scale(1.1)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        bgShift: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' }
                         }
                     }
                 }
@@ -54,23 +95,36 @@
         }
     </script>
     <style>
-        .command-card {
-            transition: all 0.3s ease;
+        /* Base styles for dark and light mode */
+        .category-card {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
             overflow: hidden;
             opacity: 0;
-            animation: fadeIn 0.5s ease-out forwards;
-            background: linear-gradient(145deg, rgba(43, 43, 43, 0.6), rgba(30, 30, 30, 0.8));
-            backdrop-filter: blur(10px);
+            animation: fadeIn 0.4s ease-out forwards;
+            backdrop-filter: blur(5px);
             border: 1px solid rgba(80, 80, 80, 0.2);
+            will-change: transform, box-shadow;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .dark .category-card {
+            background: linear-gradient(145deg, rgba(43, 43, 43, 0.6), rgba(30, 30, 30, 0.8));
+        }
+        
+        .light .category-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.9));
+            border: 1px solid rgba(220, 220, 220, 0.4);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .command-card::before {
+        .category-card::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -85,83 +139,61 @@
             );
             transform: rotate(30deg);
             opacity: 0;
-            transition: transform 0.7s ease, opacity 0.7s ease;
+            transition: transform 0.5s ease, opacity 0.5s ease;
             pointer-events: none;
             z-index: 1;
+            will-change: transform, opacity;
         }
         
-        .command-card:hover::before {
+        .category-card:hover::before {
             transform: rotate(30deg) translate(0%, 0%);
-            opacity: 1;
+            opacity: 0.8;
         }
         
-        .command-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.7), 
-                         0 0 10px rgba(93, 92, 222, 0.3),
-                         0 0 20px rgba(93, 92, 222, 0.1);
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02) rotateX(5deg);
+        }
+        
+        .dark .category-card:hover {
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5), 
+                         0 0 15px rgba(93, 92, 222, 0.3);
+        }
+        
+        .light .category-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1),
+                       0 0 15px rgba(93, 92, 222, 0.2);
         }
         
         .card-header {
-            background: linear-gradient(135deg, #6A6AE3, #5D5CDE, #4A49B0);
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
         
         .card-header::after {
             content: '';
             position: absolute;
             top: 0;
+            left: 0;
             right: 0;
             bottom: 0;
-            left: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shimmer 2s infinite;
-            transform: skewX(-20deg);
-        }
-        
-        .syntax-block {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .syntax-block:hover {
-            transform: translateX(5px);
-            box-shadow: -5px 0 0 0 #5D5CDE;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
             opacity: 0;
-            transition: all 0.2s ease;
+            transition: opacity 0.3s ease;
         }
         
-        .syntax-block:hover .copy-btn,
-        .example-block:hover .copy-btn {
+        .category-card:hover .card-header::after {
             opacity: 1;
         }
         
-        .example-block {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .example-block:hover {
-            transform: translateX(5px);
-            box-shadow: -5px 0 0 0 #4ADE80;
-        }
-        
+        /* Neon text effect */
         @keyframes neon-pulse {
-            0%, 100% { text-shadow: 0 0 5px rgba(93, 92, 222, 0.5), 0 0 10px rgba(93, 92, 222, 0.3); }
-            50% { text-shadow: 0 0 20px rgba(93, 92, 222, 0.8), 0 0 30px rgba(93, 92, 222, 0.5); }
+            0%, 100% { text-shadow: 0 0 5px rgba(93, 92, 222, 0.3), 0 0 8px rgba(93, 92, 222, 0.2); }
+            50% { text-shadow: 0 0 10px rgba(93, 92, 222, 0.5), 0 0 15px rgba(93, 92, 222, 0.3), 0 0 25px rgba(93, 92, 222, 0.2); }
         }
         
-        .neon-text {
-            animation: neon-pulse 2s ease-in-out infinite;
+        .dark .neon-text {
+            animation: neon-pulse 3s ease-in-out infinite;
         }
         
         .search-bar {
@@ -169,906 +201,1689 @@
             z-index: 10;
         }
         
-        .search-bar:focus-within::after {
+        /* Enhanced search glow */
+        .dark .search-bar:focus-within {
+            box-shadow: 0 0 0 3px rgba(93, 92, 222, 0.5), 0 0 20px rgba(93, 92, 222, 0.3);
+        }
+        
+        .light .search-bar:focus-within {
+            box-shadow: 0 0 0 3px rgba(93, 92, 222, 0.3), 0 0 10px rgba(93, 92, 222, 0.1);
+        }
+        
+        /* Custom scrollbar */
+        .dark::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .dark::-webkit-scrollbar-track {
+            background: #1E1E1E;
+        }
+        
+        .dark::-webkit-scrollbar-thumb {
+            background: #5D5CDE;
+            border-radius: 5px;
+        }
+        
+        .dark::-webkit-scrollbar-thumb:hover {
+            background: #4A49B0;
+        }
+        
+        .light::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .light::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .light::-webkit-scrollbar-thumb {
+            background: #5D5CDE;
+            border-radius: 5px;
+        }
+        
+        .light::-webkit-scrollbar-thumb:hover {
+            background: #7776E5;
+        }
+        
+        /* Optimized animation delays with fewer steps */
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-card:nth-child(5) { animation-delay: 0.5s; }
+        
+        /* Category card gradients */
+        .gradient-moderation {
+            background: linear-gradient(135deg, #F05454, #D33636);
+        }
+        
+        .gradient-utility {
+            background: linear-gradient(135deg, #30E3CA, #11999E);
+        }
+        
+        .gradient-server {
+            background: linear-gradient(135deg, #407BFF, #3E64FF);
+        }
+        
+        .gradient-management {
+            background: linear-gradient(135deg, #9A67EA, #7D4CDB);
+        }
+        
+        .gradient-fun {
+            background: linear-gradient(135deg, #FF9F45, #FF8C32);
+        }
+        
+        .category-icon-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover .category-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.1) inset;
+        }
+        
+        .category-icon-wrapper::before {
             content: '';
             position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            border-radius: 0.5rem;
-            background: linear-gradient(45deg, #5D5CDE, #7776E5, #4A49B0);
-            z-index: -1;
-            animation: search-glow 1.5s linear infinite;
+            inset: 0;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.6;
+            animation: spin 8s linear infinite;
         }
         
-        @keyframes search-glow {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+        .category-card:hover .category-icon-wrapper::before {
+            opacity: 1;
+            animation-duration: 3s;
         }
         
-        .category-button {
+        .category-icon {
+            font-size: 2.5rem;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
             transition: all 0.3s ease;
+        }
+        
+        .category-card:hover .category-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.7));
+        }
+        
+        .command-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            border-radius: 9999px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dark .command-count {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .light .command-count {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .command-count-number {
+            margin-left: 0.25rem;
+            position: relative;
+        }
+        
+        .category-card:hover .command-count {
+            transform: scale(1.1);
+        }
+        
+        .dark .category-card:hover .command-count {
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .light .category-card:hover .command-count {
+            background-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .view-button {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .view-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+            z-index: -1;
+        }
+        
+        .view-button:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .view-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .dark .view-button:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .light .view-button:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Command list animations */
+        .commands-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .commands-container.expanded {
+            max-height: 1000px;
+        }
+        
+        .command-item {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .command-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .command-item:hover {
+            transform: translateY(-3px) scale(1.01) rotateX(2deg);
+            z-index: 2;
+        }
+        
+        .dark .command-item:hover {
+            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .light .command-item:hover {
+            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Command item staggered animations */
+        .commands-container.expanded .command-item:nth-child(1) { transition-delay: 0.1s; }
+        .commands-container.expanded .command-item:nth-child(2) { transition-delay: 0.15s; }
+        .commands-container.expanded .command-item:nth-child(3) { transition-delay: 0.2s; }
+        .commands-container.expanded .command-item:nth-child(4) { transition-delay: 0.25s; }
+        .commands-container.expanded .command-item:nth-child(5) { transition-delay: 0.3s; }
+        .commands-container.expanded .command-item:nth-child(6) { transition-delay: 0.35s; }
+        
+        /* Rotating energy effect */
+        .energy-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: spin 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        .energy-ring:nth-child(2) {
+            width: 180%;
+            height: 180%;
+            border-width: 1px;
+            animation-duration: 15s;
+            animation-direction: reverse;
+        }
+        
+        .energy-ring:nth-child(3) {
+            width: 120%;
+            height: 120%;
+            border-width: 3px;
+            animation-duration: 25s;
+        }
+        
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Particles container */
+        #commands-detail-container {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            display: none;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(93, 92, 222, 0.1);
+        }
+        
+        .dark #commands-detail-container {
+            background: rgba(30, 30, 30, 0.7);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .light #commands-detail-container {
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        #commands-detail-container.visible {
+            display: block;
+            max-height: 2000px;
+            opacity: 1;
+            transform: translateY(0);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .category-details-header {
             position: relative;
             overflow: hidden;
         }
         
-        .category-button.active {
-            background: linear-gradient(135deg, #6A6AE3, #5D5CDE, #4A49B0);
-            color: white;
-        }
-        
-        .category-button.active::before {
-            content: '';
+        .background-glow {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, rgba(93, 92, 222, 0.3), rgba(119, 118, 229, 0.3));
+            opacity: 0.15;
+            filter: blur(20px);
             z-index: -1;
-        }
-        
-        .category-button:hover:not(.active) {
-            background-color: #2D2D2D;
-            transform: translateY(-2px);
-        }
-        
-        .category-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-right: 6px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .permission-badge {
-            display: flex;
-            align-items: center;
-            font-weight: 500;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
         
-        .permission-badge i {
-            margin-right: 4px;
+        .category-details-header:hover .background-glow {
+            opacity: 0.25;
+            filter: blur(15px);
         }
         
-        .tooltip {
+        /* Command parameter styles */
+        .parameter {
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .dark .parameter {
+            background-color: rgba(93, 92, 222, 0.15);
+            color: #a5a4ff;
+            border: 1px solid rgba(93, 92, 222, 0.3);
+        }
+        
+        .light .parameter {
+            background-color: rgba(93, 92, 222, 0.1);
+            color: #4A49B0;
+            border: 1px solid rgba(93, 92, 222, 0.2);
+        }
+        
+        .dark .parameter.required {
+            border-left: 3px solid #5D5CDE;
+        }
+        
+        .light .parameter.required {
+            border-left: 3px solid #4A49B0;
+        }
+        
+        .dark .parameter.optional {
+            border-left: 3px solid #30E3CA;
+            color: #7de8db;
+            background-color: rgba(48, 227, 202, 0.15);
+        }
+        
+        .light .parameter.optional {
+            border-left: 3px solid #11999E;
+            color: #11999E;
+            background-color: rgba(48, 227, 202, 0.1);
+        }
+        
+        /* Count animation */
+        @keyframes countNumber {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .count-animate {
+            animation: countNumber 0.5s forwards;
+            display: inline-block;
+        }
+        
+        /* Slash command indicator */
+        .slash-prefix {
+            font-weight: bold;
+        }
+        
+        .dark .slash-prefix {
+            color: #919191;
+        }
+        
+        .light .slash-prefix {
+            color: #666666;
+        }
+        
+        /* Floating particles */
+        .floating-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            z-index: 0;
+        }
+        
+        /* Total command counter - repositioned and redesigned */
+        .total-command-counter {
+            backdrop-filter: blur(5px);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 5;
+        }
+        
+        .dark .total-command-counter {
+            background: rgba(93, 92, 222, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .light .total-command-counter {
+            background: rgba(93, 92, 222, 0.7);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .total-command-counter:hover {
+            transform: translateY(-2px);
+        }
+        
+        .dark .total-command-counter:hover {
+            background: rgba(93, 92, 222, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .light .total-command-counter:hover {
+            background: rgba(93, 92, 222, 0.8);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 3D Card effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .card-3d-content {
+            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-3d:hover .card-3d-content {
+            transform: rotateX(5deg) rotateY(5deg);
+        }
+        
+        /* Command type badges */
+        .command-type {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+        
+        .dark .command-type {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .light .command-type {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+        
+        /* Title styles - updated for Exovyn Mocha */
+        .title-container {
             position: relative;
+            overflow: hidden;
         }
         
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 120px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
+        .title-bg {
             position: absolute;
-            z-index: 10;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(-45deg, #5D5CDE, #4A49B0, #6A6AE3, #7776E5);
+            background-size: 400% 400%;
+            opacity: 0.8;
+            filter: blur(50px);
+            z-index: -1;
+            animation: bg-shift 15s ease infinite;
+        }
+        
+        @keyframes bg-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .title-letter {
+            display: inline-block;
             opacity: 0;
-            transition: opacity 0.3s;
+            transform: translateY(15px) rotate(10deg) scale(0.8);
+            animation: letterAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         
-        .tooltip .tooltip-text::after {
-            content: "";
+        /* Theme toggle - repositioned */
+        .theme-toggle {
+            z-index: 100;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .dark .theme-toggle {
+            background: rgba(30, 30, 30, 0.8);
+            color: #FFF;
+            box-shadow: 0 0 15px rgba(93, 92, 222, 0.3);
+        }
+        
+        .light .theme-toggle {
+            background: rgba(255, 255, 255, 0.8);
+            color: #121212;
+            box-shadow: 0 0 15px rgba(93, 92, 222, 0.2);
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+        
+        .dark .theme-toggle:hover {
+            border-color: rgba(93, 92, 222, 0.5);
+            box-shadow: 0 0 20px rgba(93, 92, 222, 0.4);
+        }
+        
+        .light .theme-toggle:hover {
+            border-color: rgba(93, 92, 222, 0.3);
+            box-shadow: 0 0 20px rgba(93, 92, 222, 0.3);
+        }
+        
+        /* Enhanced particles */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .particle-dot {
             position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #333 transparent transparent transparent;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: 0;
+            transition: opacity 0.5s ease;
         }
         
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
+        .light .particle-dot {
+            filter: brightness(0.8);
         }
         
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
+        /* Header bar styling for controls */
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
         }
         
-        ::-webkit-scrollbar-track {
-            background: #1E1E1E;
+        .dark .header-controls {
+            background: rgba(45, 45, 45, 0.5);
+            backdrop-filter: blur(10px);
         }
         
-        ::-webkit-scrollbar-thumb {
-            background: #5D5CDE;
-            border-radius: 5px;
+        .light .header-controls {
+            background: rgba(240, 240, 240, 0.7);
+            backdrop-filter: blur(10px);
         }
         
-        ::-webkit-scrollbar-thumb:hover {
-            background: #4A49B0;
+        /* Mocha styling for title */
+        .mocha-title {
+            background: linear-gradient(90deg, #5D5CDE, #7776E5, #9a67ea);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 10px rgba(93, 92, 222, 0.3);
         }
         
-        /* Animation delays for staggered appearance */
-        .command-card:nth-child(1) { animation-delay: 0.1s; }
-        .command-card:nth-child(2) { animation-delay: 0.2s; }
-        .command-card:nth-child(3) { animation-delay: 0.3s; }
-        .command-card:nth-child(4) { animation-delay: 0.4s; }
-        .command-card:nth-child(5) { animation-delay: 0.5s; }
-        .command-card:nth-child(6) { animation-delay: 0.6s; }
-        .command-card:nth-child(7) { animation-delay: 0.7s; }
-        
-        /* Blinking cursor animation for search placeholder */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        .search-cursor::after {
-            content: '|';
-            animation: blink 1s step-start infinite;
+        .light .mocha-title {
+            background: linear-gradient(90deg, #4A49B0, #5D5CDE, #7d4cdb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(93, 92, 222, 0.2);
         }
     </style>
 </head>
-<body class="bg-dark-900 text-gray-200 min-h-screen transition-colors duration-200">
-    <!-- Force dark mode -->
-    <script>
-        document.documentElement.classList.add('dark');
-    </script>
-    
-    <!-- Background particles -->
-    <div id="particles-js" class="fixed inset-0 z-0 opacity-30"></div>
+<body class="bg-dark-900 text-gray-200 min-h-screen transition-colors duration-500">
+    <!-- Background canvas for enhanced particles -->
+    <canvas id="particle-canvas"></canvas>
 
     <div class="container mx-auto px-4 py-8 max-w-4xl relative z-10">
-        <!-- Header -->
-        <div class="text-center mb-10 animate-float">
-            <h1 class="text-5xl font-bold text-white mb-4 neon-text">Mocha Commands</h1>
-            <p class="text-xl text-gray-300">A list of Exovyn Mochas Commands!</p>
+        <!-- Enhanced Header with Exovyn Mocha title -->
+        <div class="title-container bg-opacity-20 rounded-xl p-6 mb-6 overflow-hidden relative">
+            <div class="title-bg"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center">
+                <div class="flex items-center justify-center mb-2">
+                    <h1 class="text-6xl font-bold text-white mb-0 neon-text fancy-underline mocha-title">
+                        <span class="title-letter" style="animation-delay: 0.1s">E</span>
+                        <span class="title-letter" style="animation-delay: 0.15s">x</span>
+                        <span class="title-letter" style="animation-delay: 0.2s">o</span>
+                        <span class="title-letter" style="animation-delay: 0.25s">v</span>
+                        <span class="title-letter" style="animation-delay: 0.3s">y</span>
+                        <span class="title-letter" style="animation-delay: 0.35s">n</span>
+                        <span class="title-letter" style="animation-delay: 0.4s"> </span>
+                        <span class="title-letter" style="animation-delay: 0.45s">M</span>
+                        <span class="title-letter" style="animation-delay: 0.5s">o</span>
+                        <span class="title-letter" style="animation-delay: 0.55s">c</span>
+                        <span class="title-letter" style="animation-delay: 0.6s">h</span>
+                        <span class="title-letter" style="animation-delay: 0.65s">a</span>
+                    </h1>
+                </div>
+                <p class="text-xl dark:text-gray-300 light:text-gray-700 mb-6 animate-bounce-in" style="animation-delay: 0.7s">All the commands for Exovyn Mocha!</p>
+                
+                <!-- Header Controls Bar - Theme toggle and command count together -->
+                <div class="header-controls w-full max-w-md flex justify-between items-center animate-fade-in">
+                    <!-- Total command counter - repositioned -->
+                    <div class="total-command-counter animate-count-up">
+                        <i class="fas fa-code-branch text-lg"></i>
+                        <span>Total Commands: <span id="total-command-count" class="font-mono">0</span></span>
+                    </div>
+                    
+                    <!-- Theme toggle - repositioned -->
+                    <div class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon text-xl"></i>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Search Bar -->
-        <div class="mb-6 relative search-bar">
+        <div class="mb-8 relative search-bar">
             <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
             </div>
-            <input type="text" id="searchInput" placeholder="Search commands by name, description, or syntax..." 
-                class="w-full pl-12 pr-4 py-4 rounded-lg border-2 border-dark-600 bg-dark-800 text-white text-base focus:outline-none focus:border-primary transition-all duration-300">
+            <input type="text" id="searchInput" placeholder="Search slash commands..." 
+                class="w-full pl-12 pr-4 py-4 rounded-lg border-2 border-dark-600 dark:bg-dark-800 dark:text-white light:bg-light-700 light:text-gray-800 text-base focus:outline-none focus:border-primary transition-all duration-300">
         </div>
         
-        <!-- Category Filters -->
-        <div class="mb-8">
-            <div class="flex justify-between items-center mb-3">
-                <h3 class="text-lg font-medium text-white">Filter by Category</h3>
-                <div id="searchStats" class="text-sm text-gray-400 hidden">
-                    Showing <span id="resultCount">0</span> of <span id="totalCount">0</span> commands
+        <!-- Commands Detail Container (initially hidden) -->
+        <div id="commands-detail-container" class="p-6 mb-8">
+            <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <!-- Categories Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="categoriesGrid">
+            <!-- Moderation Category -->
+            <div class="category-card rounded-lg overflow-hidden card-3d" data-category="moderation">
+                <div class="card-3d-content">
+                    <div class="card-header gradient-moderation px-6 py-10 text-white flex flex-col items-center justify-center relative">
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <span class="command-type">Moderation</span>
+                        <span class="command-count">
+                            <i class="fas fa-code-branch"></i>
+                            <span class="command-count-number"></span> 
+                        </span>
+                        <div class="category-icon-wrapper">
+                            <i class="fas fa-shield-alt category-icon"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">Moderation</h2>
+                        <p class="text-white text-opacity-80 text-center mt-2">
+                            Commands for maintaining server order and enforcing rules
+                        </p>
+                    </div>
+                    <div class="p-4 dark:bg-dark-800 light:bg-light-800">
+                        <p class="dark:text-gray-400 light:text-gray-600 mb-3 text-sm">Popular commands:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>ban</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>kick</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>timeout</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>warn</span>
+                        </div>
+                        <button class="view-button block w-full mt-4 text-center py-2 dark:bg-dark-700 dark:hover:bg-dark-600 light:bg-light-700 light:hover:bg-light-600 dark:text-white light:text-gray-800 rounded-md transition-colors">
+                            View All Moderation Commands
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="flex flex-wrap gap-2" id="categoryFilters">
-                <!-- Categories will be populated here -->
-                <button class="category-button active bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center" data-category="all">
-                    <i class="fas fa-globe-americas mr-2"></i> All Categories
-                </button>
+            
+            <!-- Utility Category -->
+            <div class="category-card rounded-lg overflow-hidden card-3d" data-category="utility">
+                <div class="card-3d-content">
+                    <div class="card-header gradient-utility px-6 py-10 text-white flex flex-col items-center justify-center relative">
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <span class="command-type">Utility</span>
+                        <span class="command-count">
+                            <i class="fas fa-code-branch"></i>
+                            <span class="command-count-number"></span> 
+                        </span>
+                        <div class="category-icon-wrapper">
+                            <i class="fas fa-tools category-icon"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">Utility</h2>
+                        <p class="text-white text-opacity-80 text-center mt-2">
+                            Helpful utility commands for everyday server tasks
+                        </p>
+                    </div>
+                    <div class="p-4 dark:bg-dark-800 light:bg-light-800">
+                        <p class="dark:text-gray-400 light:text-gray-600 mb-3 text-sm">Popular commands:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>help</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>ping</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>userinfo</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>serverinfo</span>
+                        </div>
+                        <button class="view-button block w-full mt-4 text-center py-2 dark:bg-dark-700 dark:hover:bg-dark-600 light:bg-light-700 light:hover:bg-light-600 dark:text-white light:text-gray-800 rounded-md transition-colors">
+                            View All Utility Commands
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- Commands List -->
-        <div class="space-y-6" id="commandsList">
-            <!-- Commands will be populated here -->
+            
+            <!-- Server Category -->
+            <div class="category-card rounded-lg overflow-hidden card-3d" data-category="server">
+                <div class="card-3d-content">
+                    <div class="card-header gradient-server px-6 py-10 text-white flex flex-col items-center justify-center relative">
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <span class="command-type">Server</span>
+                        <span class="command-count">
+                            <i class="fas fa-code-branch"></i>
+                            <span class="command-count-number"></span> 
+                        </span>
+                        <div class="category-icon-wrapper">
+                            <i class="fas fa-server category-icon"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">Server</h2>
+                        <p class="text-white text-opacity-80 text-center mt-2">
+                            Commands for server setup and configuration
+                        </p>
+                    </div>
+                    <div class="p-4 dark:bg-dark-800 light:bg-light-800">
+                        <p class="dark:text-gray-400 light:text-gray-600 mb-3 text-sm">Popular commands:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>setup</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>welcome</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>config</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>channels</span>
+                        </div>
+                        <button class="view-button block w-full mt-4 text-center py-2 dark:bg-dark-700 dark:hover:bg-dark-600 light:bg-light-700 light:hover:bg-light-600 dark:text-white light:text-gray-800 rounded-md transition-colors">
+                            View All Server Commands
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Management Category -->
+            <div class="category-card rounded-lg overflow-hidden card-3d" data-category="management">
+                <div class="card-3d-content">
+                    <div class="card-header gradient-management px-6 py-10 text-white flex flex-col items-center justify-center relative">
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <span class="command-type">Management</span>
+                        <span class="command-count">
+                            <i class="fas fa-code-branch"></i>
+                            <span class="command-count-number"></span> 
+                        </span>
+                        <div class="category-icon-wrapper">
+                            <i class="fas fa-user-cog category-icon"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">Management</h2>
+                        <p class="text-white text-opacity-80 text-center mt-2">
+                            Commands for server and role management
+                        </p>
+                    </div>
+                    <div class="p-4 dark:bg-dark-800 light:bg-light-800">
+                        <p class="dark:text-gray-400 light:text-gray-600 mb-3 text-sm">Popular commands:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>role</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>perms</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>logs</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>backup</span>
+                        </div>
+                        <button class="view-button block w-full mt-4 text-center py-2 dark:bg-dark-700 dark:hover:bg-dark-600 light:bg-light-700 light:hover:bg-light-600 dark:text-white light:text-gray-800 rounded-md transition-colors">
+                            View All Management Commands
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fun Category -->
+            <div class="category-card rounded-lg overflow-hidden md:col-span-2 card-3d" data-category="fun">
+                <div class="card-3d-content">
+                    <div class="card-header gradient-fun px-6 py-10 text-white flex flex-col items-center justify-center relative">
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <div class="energy-ring"></div>
+                        <span class="command-type">Fun</span>
+                        <span class="command-count">
+                            <i class="fas fa-code-branch"></i>
+                            <span class="command-count-number"></span> 
+                        </span>
+                        <div class="category-icon-wrapper animate-sway">
+                            <i class="fas fa-gamepad category-icon"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">Fun</h2>
+                        <p class="text-white text-opacity-80 text-center mt-2">
+                            Fun commands to entertain your server members
+                        </p>
+                    </div>
+                    <div class="p-4 dark:bg-dark-800 light:bg-light-800">
+                        <p class="dark:text-gray-400 light:text-gray-600 mb-3 text-sm">Popular commands:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>meme</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>8ball</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>joke</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>trivia</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>poll</span>
+                            <span class="px-2 py-1 dark:bg-dark-700 light:bg-light-700 rounded-md text-xs"><span class="slash-prefix">/</span>gif</span>
+                        </div>
+                        <button class="view-button block w-full mt-4 text-center py-2 dark:bg-dark-700 dark:hover:bg-dark-600 light:bg-light-700 light:hover:bg-light-600 dark:text-white light:text-gray-800 rounded-md transition-colors">
+                            View All Fun Commands
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Initialize particles.js
+        // Set up three.js for enhanced particle effects
+        let renderer, scene, camera, particles;
+        let mouseX = 0, mouseY = 0;
+        
+        function initParticles() {
+            const canvas = document.getElementById('particle-canvas');
+            
+            // Scene setup
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+            
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            
+            // Particle system
+            const particleCount = 700;
+            const particleGeometry = new THREE.BufferGeometry();
+            const particleMaterial = new THREE.PointsMaterial({
+                color: 0x5D5CDE,
+                size: 0.3,
+                transparent: true,
+                opacity: 0.5,
+                vertexColors: true,
+            });
+            
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                
+                // Position
+                positions[i3] = (Math.random() - 0.5) * 60; 
+                positions[i3 + 1] = (Math.random() - 0.5) * 60;
+                positions[i3 + 2] = (Math.random() - 0.5) * 60;
+                
+                // Color - create a gradient from primary to a lighter shade
+                const shade = Math.random();
+                colors[i3] = 0.3 + shade * 0.4; // R
+                colors[i3 + 1] = 0.3 + shade * 0.4; // G
+                colors[i3 + 2] = 0.7 + shade * 0.3; // B - more blue for the primary color
+            }
+            
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+            
+            // Event listeners
+            document.addEventListener('mousemove', onMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+            
+            // Start animation
+            animate();
+        }
+        
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate based on mouse position
+            particles.rotation.x += 0.0003;
+            particles.rotation.y += 0.0005;
+            
+            // Subtle influence from mouse position
+            particles.rotation.x += mouseY * 0.0003;
+            particles.rotation.y += mouseX * 0.0003;
+            
+            // Get positions
+            const positions = particles.geometry.attributes.position.array;
+            
+            // Add subtle movement to particles
+            for (let i = 0; i < positions.length; i += 3) {
+                // Small sine wave movement
+                positions[i] += Math.sin(Date.now() * 0.001 + i) * 0.003;
+                positions[i + 1] += Math.cos(Date.now() * 0.002 + i) * 0.003;
+                positions[i + 2] += Math.sin(Date.now() * 0.001 + i) * 0.003;
+            }
+            
+            particles.geometry.attributes.position.needsUpdate = true;
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Initialize Three.js particles
         document.addEventListener('DOMContentLoaded', function() {
-            particlesJS("particles-js", {
-                particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 } },
-                    color: { value: "#5D5CDE" },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.5, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#5D5CDE",
-                        opacity: 0.2,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 1,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false
-                    }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: { enable: true, mode: "grab" },
-                        onclick: { enable: true, mode: "push" },
-                        resize: true
-                    },
-                    modes: {
-                        grab: { distance: 140, line_linked: { opacity: 0.5 } },
-                        push: { particles_nb: 4 }
-                    }
-                },
-                retina_detect: true
+            initParticles();
+            
+            // Show the total command counter
+            document.querySelector('.total-command-counter').classList.remove('hidden');
+            
+            // Animate title letters
+            const letters = document.querySelectorAll('.title-letter');
+            letters.forEach((letter, index) => {
+                letter.style.animationDelay = `${0.1 + index * 0.05}s`;
             });
         });
 
-        // Bot commands data
-        const commands = [
+        // Categories and commands data
+        const categoriesData = [
             {
-                name: "timeout",
-                syntax: "timeout @user [duration] [reason]",
-                description: "Temporarily restricts a user from sending messages or interacting in the server.",
-                example: "timeout @User#1234 1h Spamming",
-                permission: "Timeout Members",
-                category: "moderation",
-                icon: "fa-user-clock"
+                id: "moderation",
+                name: "Moderation",
+                description: "Commands for maintaining server order and enforcing rules",
+                icon: "fa-shield-alt",
+                gradient: "gradient-moderation",
+                commandCount: 12,
+                popularCommands: ["/ban", "/kick", "/timeout", "/warn", "/mute", "/unmute"],
+                commands: [
+                    { 
+                        name: "ban", 
+                        description: "Ban a user from the server", 
+                        params: [
+                            { name: "user", description: "User to ban", required: true },
+                            { name: "reason", description: "Reason for the ban", required: false },
+                            { name: "delete_messages", description: "Delete messages from the past X days", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "unban", 
+                        description: "Unban a user from the server", 
+                        params: [
+                            { name: "user_id", description: "Discord ID of the banned user", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "kick", 
+                        description: "Kick a user from the server", 
+                        params: [
+                            { name: "user", description: "User to kick", required: true },
+                            { name: "reason", description: "Reason for the kick", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "mute", 
+                        description: "Mute a user in the server", 
+                        params: [
+                            { name: "user", description: "User to mute", required: true },
+                            { name: "duration", description: "Duration of the mute (1m, 1h, 1d)", required: false },
+                            { name: "reason", description: "Reason for the mute", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "unmute", 
+                        description: "Unmute a muted user", 
+                        params: [
+                            { name: "user", description: "User to unmute", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "timeout", 
+                        description: "Timeout a user", 
+                        params: [
+                            { name: "user", description: "User to timeout", required: true },
+                            { name: "duration", description: "Duration of the timeout (1m, 1h, 1d)", required: true },
+                            { name: "reason", description: "Reason for the timeout", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "untimeout", 
+                        description: "Remove a timeout from a user", 
+                        params: [
+                            { name: "user", description: "User to remove timeout from", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "warn", 
+                        description: "Warn a user", 
+                        params: [
+                            { name: "user", description: "User to warn", required: true },
+                            { name: "reason", description: "Reason for the warning", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "warns", 
+                        description: "View warnings for a user", 
+                        params: [
+                            { name: "user", description: "User to check warnings for", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "warnsremove", 
+                        description: "Clear warnings for a user", 
+                        params: [
+                            { name: "user", description: "User to clear warnings for", required: true },
+                            { name: "warning_id", description: "Specific warning ID to clear", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "softban", 
+                        description: "Ban and immediately unban a user to delete their messages", 
+                        params: [
+                            { name: "user", description: "User to softban", required: true },
+                            { name: "reason", description: "Reason for the softban", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "lockdown", 
+                        description: "Lock a channel to prevent messages", 
+                        params: [
+                            { name: "channel", description: "Channel to lock", required: false },
+                            { name: "reason", description: "Reason for locking the channel", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "lockdownall", 
+                        description: "Lock all channels", 
+                        params: [
+                            { name: "channel", description: "lock all channels", required: false },
+                            { name: "reason", description: "Reason for locking the channel", required: false }
+                        ]
+                    },
+                    { 
+                        name: "unlock", 
+                        description: "unlock a channel to allow messages", 
+                        params: [
+                            { name: "channel", description: "Channel to unlock", required: false },
+                            { name: "reason", description: "Reason for unlocking the channel", required: false }
+                        ], 
+                    },
+                    { 
+                        name: "unlockall", 
+                        description: "unlock all channels", 
+                        params: [
+                            { name: "channel", description: "Unlock all", required: false },
+                            { name: "reason", description: "Reason for unlocking all channels", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "slowmode", 
+                        description: "set slowmode for a channel", 
+                        params: [
+                            { name: "time", description: "time", required: false },
+                        ] 
+                    },
+                    { 
+                        name: "purge", 
+                        description: "purge either links,images,humans or just kfu's messages", 
+                        params: [
+                            { name: "amount", description: "time", required: false },
+                        ] 
+                    },{ 
+                        name: "nickname", 
+                        description: "set a nickname for a user", 
+                        params: [
+                            { name: "nickname", description: "nick", required: false },
+                        ] 
+                    },
+                    { 
+                        name: "tempban", 
+                        description: "temp ban someone", 
+                        params: [
+                            { name: "time", description: "time", required: false },
+                        ] 
+                    }
+                ]
             },
             {
-                name: "untimeout",
-                syntax: "untimeout @user",
-                description: "Removes an active timeout from a user, restoring their ability to send messages.",
-                example: "untimeout @User#1234",
-                permission: "Timeout Members",
-                category: "moderation",
-                icon: "fa-user-check"
-            },   
-            {
-                name: "ping",
-                syntax: "ping",
-                description: "Checks the bot's response time and connection status.",
-                example: "ping",
-                permission: "None",
-                category: "utility",
-                icon: "fa-network-wired"
+                id: "utility",
+                name: "Utility",
+                description: "Helpful utility commands for everyday server tasks",
+                icon: "fa-tools",
+                gradient: "gradient-utility",
+                commandCount: 8,
+                popularCommands: ["/donate", "/ping", "/userinfo", "/serverinfo", "/avatar"],
+                commands: [
+                    { 
+                        name: "help", 
+                        description: "How you got here", 
+                        params: [
+                            { name: "command", description: "Command", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "ping", 
+                        description: "Check the bot's latency", 
+                        params: [] 
+                    },
+                    { 
+                        name: "userinfo", 
+                        description: "Display information about a user", 
+                        params: [
+                            { name: "user", description: "User to get info about", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "serverinfo", 
+                        description: "Display information about the server", 
+                        params: [] 
+                    },
+                    { 
+                        name: "avatar", 
+                        description: "Display a user's avatar", 
+                        params: [
+                            { name: "user", description: "User to get avatar for", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "donate", 
+                        description: "Support the bot with a donation", 
+                        params: [] 
+                    },
+                    { 
+                        name: "welcome-adddm", 
+                        description: "Set a welcome dm", 
+                        params: [
+                            { name: "DM", description: "DM to send when joining", required: true },
+                            { name: "message", description: ".", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "welcome-listdm", 
+                        description: "welcome dm list", 
+                        params: [
+                            { name: "DM", description: "DM to send when joining", required: false },
+                            { name: "message", description: ".", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "welcome-removedm", 
+                        description: "Remove welcome dm", 
+                        params: [
+                            { name: "DM", description: "DM to send when joining", required: false },
+                            { name: "message", description: ".", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "firstmessage", 
+                        description: "first message finder", 
+                        params: [
+                            { name: "User", description: "meow", required: false },
+                            { name: "message", description: "kfu is so cool", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "uptime", 
+                        description: "View bot", 
+                        params: [
+                            { name: "User", description: "meow", required: false },
+                            { name: "message", description: "kfu is so cool", required: false }
+                        ] 
+                    },
+                ]
             },
             {
-                name: "ban",
-                syntax: "ban @user [reason]",
-                description: "Permanently removes a user from the server. They cannot rejoin unless unbanned.",
-                example: "ban @User#1234 Violation of server rules",
-                permission: "Ban Members",
-                category: "moderation",
-                icon: "fa-gavel"
+                id: "server",
+                name: "Server",
+                description: "Commands for server setup and configuration",
+                icon: "fa-server",
+                gradient: "gradient-server",
+                commandCount: 10,
+                popularCommands: ["/setup", "/welcome", "/config", "/channels", "/prefix"],
+                commands: [
+                    { 
+                        name: "autorole", 
+                        description: "Configure automatic role assignment", 
+                        params: [
+                            { name: "role", description: "Role to assign to new members", required: true }
+                        ] 
+                    },
+                ]
             },
             {
-                name: "unban",
-                syntax: "unban @user or user_id",
-                description: "Removes a ban on a user, allowing them to rejoin the server.",
-                example: "!unban @User#1234",
-                permission: "Ban Members",
-                category: "moderation",
-                icon: "fa-user-plus"
+                id: "management",
+                name: "Management",
+                description: "Commands for server and role management",
+                icon: "fa-user-cog",
+                gradient: "gradient-management",
+                commandCount: 9,
+                popularCommands: ["/role", "/perms", "/logs", "/backup", "/purge"],
+                commands: [
+                    { 
+                        name: "logs", 
+                        description: "View server logs", 
+                        params: [
+                            { name: "count", description: "Number of log entries to show", required: false },
+                            { name: "type", description: "Type of logs to show", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "backup", 
+                        description: "Create or load a server backup", 
+                        params: [
+                            { name: "action", description: "Action to perform (create, load, list)", required: true },
+                            { name: "id", description: "Backup ID for load action", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "announce", 
+                        description: "Send an announcement", 
+                        params: [
+                            { name: "channel", description: "Channel to send announcement to", required: true },
+                            { name: "message", description: "Announcement message", required: true },
+                            { name: "ping", description: "Role to ping with announcement", required: false }
+                        ] 
+                    }
+                ]
             },
             {
-                name: "softban",
-                syntax: "softban @user [reason]",
-                description: "Bans and immediately unbans a user, effectively removing them from the server while deleting their recent messages.",
-                example: "softban @User#1234 Inappropriate messages",
-                permission: "Ban Members",
-                category: "moderation",
-                icon: "fa-ban"
-            },
-            {
-                name: "kick",
-                syntax: "kick @user [reason]",
-                description: "Removes a user from the server. Unlike a ban, they can rejoin with a new invite.",
-                example: "kick @User#1234 Disruptive behavior",
-                permission: "Kick Members",
-                category: "moderation",
-                icon: "fa-user-minus"
-            },
-              {
-                name: "warn",
-                syntax: "warn @user [reason]",
-                description: "Warn a user",
-                example: "warn @User#1234",
-                permission: "Manage Messages",
-                category: "moderation",
-                icon: "fa-user-check"
-             },
-          {
-                name: "warns",
-                syntax: "warns",
-                description: "View a users warnings",
-                example: "warns @User#1234",
-                permission: "Manage Messages",
-                category: "moderation",
-                icon: "fa-user-check"
-            },
-            {
-                name: "warnsremove",
-                syntax: "warnsremove [warn ID]",
-                description: "Remove a users warnings",
-                example: "warnsremove @User#1234 [warn ID]",
-                permission: "Manage Messages",
-                category: "moderation",
-                icon: "fa-user-check"
-            },
-            {
-                name: "lockdown",
-                syntax: "lockdown [channel]",
-                description: "lockdown a channel",
-                example: "lockdown [channel]",
-                permission: "Manage Channels",
-                category: "server",
-                icon: "fa-user-check"
-            },
-              {
-                name: "unlock",
-                syntax: "unlock [channel]",
-                description: "unlock a channel",
-                example: "unlock [channel]",
-                permission: "Manage Channels",
-                category: "server",
-                icon: "fa-user-check"
-            },
-              {
-                name: "lockdownall",
-                syntax: "lockdownall [channel]",
-                description: "lockdown all channels",
-                example: "lockdownall [channel]",
-                permission: "Manage Channels",
-                category: "server",
-                icon: "fa-user-check"
-            },
-              {
-                name: "unlockall",
-                syntax: "unlockall [channel]",
-                description: "unlock all channels",
-                example: "unlock [channel]",
-                permission: "Manage Channels",
-                category: "server",
-                icon: "fa-user-check"
-            },
-            {
-                name: "add-global-permissions",
-                syntax: "add-global-permission [permission]",
-                description: "Globally add a permission for your server",
-                example: "add-global-permission [permission]",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-            },
-             {
-                name: "remove-global-permissions",
-                syntax: "remove-global-permission [permission]",
-                description: "Globally remove a permission for your server",
-                example: "remove-global-permission [permission]",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-            },
-            {
-                name: "create-role",
-                syntax: "create-role @role name [perm]",
-                description: "create a role",
-                example: "create-role @role name [perm]",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-            {
-                name: "delete-role",
-                syntax: "delete-role @role name",
-                description: "delete a role",
-                example: "delete-role @role name",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-            {
-                name: "role-add",
-                syntax: "role-add @role name @user123",
-                description: "give a role",
-                example: "role-add @role name [@user123",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-                {
-                name: "role-remove",
-                syntax: "role-remove @role name @user123",
-                description: "remove a role",
-                example: "role-remove @role name [@user123",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-                {
-                name: "role-edit-permission",
-                syntax: "role-edit-permissions @role name @user123",
-                description: "edit a role or two",
-                example: "role-edit-permission @role name [@user123",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-              {
-                name: "slowmode",
-                syntax: "slowmode [time]",
-                description: "change slowmode rate",
-                example: "slowmode [time]",
-                permission: "Manage CHannel",
-                category: "utility",
-                icon: "fa-user-check"
-             },
-             {
-                name: "role bots",
-                syntax: "rolebots [role]",
-                description: "Give all the bots in your server a certain role!",
-                example: "rolebots @Bots",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-             {
-                name: "Role Bots Remove",
-                syntax: "rolebotsremove [Role]",
-                description: "Remove roles from all the bots in your server...",
-                example: "rolebotsremove @Member",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-             {
-                name: "Role All",
-                syntax: "roleall",
-                description: "Remove a role from everyone!",
-                example: "roleall @cool people",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-             {
-                name: "Role Remove All",
-                syntax: "roleremoveall [role]",
-                description: "Role all but reversed",
-                example: "roleremoveall @unverified",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-             {
-                name: "Role Icon",
-                syntax: "roleicon",
-                description: "give a role an icon",
-                example: "roleicon [img,png]",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             }, {
-                name: "Role Icon Remove",
-                syntax: "roleiconremove",
-                description: "remove a roles icon",
-                example: "roleiconremove @role",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-             {
-                name: "Role Hoist",
-                syntax: "rolehoist",
-                description: "Hoist a role",
-                example: "rolehoist @role",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-             {
-                name: "Role Unhoist",
-                syntax: "roleunhoist",
-                description: "Unhoist a role",
-                example: "roleunhoist @member",
-                permission: "Manage Roles",
-                category: "server",
-                icon: "fa-user-check"
-             },
-             {
-                name: "purge",
-                syntax: "purge",
-                description: "purge either humans,bots,links or images",
-                example: "purge 99",
-                permission: "Manage Messages",
-                category: "utility",
-                icon: "fa-user-check"
-             },
-             {
-                name: "say",
-                syntax: "say",
-                description: "Make the bot say something!",
-                example: "say hello world",
-                permission: "Manage Server",
-                category: "fun",
-                icon: "fa-user-check"
-             },
-            {
-                name: "say v2",
-                syntax: "sayv2",
-                description: "improved say",
-                example: "sayv2 [content]",
-                permission: "Manage Server",
-                category: "fun",
-                icon: "fa-user-check"
-             },
-             {
-                name: "viewpermissions role/user",
-                syntax: "viewpermissions",
-                description: "View a role or users permissions",
-                example: "viewpermissions user @yn.bando",
-                permission: "None",
-                category: "utility",
-                icon: "fa-user-check"
-             },
-            {
-                name: "auto response",
-                syntax: "setautoresponse",
-                description: "set a message the bot will automatically respond too!",
-                example: "setautorepsonse [content] [content]",
-                permission: "Manage Server",
-                category: "server",
-                icon: "fa-user-check"
-             },
-            {
-                name: "remove auto response",
-                syntax: "removeautoresponse",
-                description: "remove an auto response",
-                example: "removeautoresponse [content]",
-                permission: "Manage Server",
-                category: "server",
-                icon: "fa-user-check"
-             },
-            {
-                name: "List auto response",
-                syntax: "listautoresponses",
-                description: "View all the auto responses",
-                example: "listautoresponses",
-                permission: "Manage Server",
-                category: "server",
-                icon: "fa-user-check"
-             },
-            {
-                name: "Donate",
-                syntax: "Donate",
-                description: "Link to where you can donate!",
-                example: "Donate",
-                permission: "None",
-                category: "utility",
-                icon: "fa-user-check"
-             },
-            {
-                name: "Remind",
-                syntax: "remind",
-                description: "remind yourself something",
-                example: "remind [content] [time]",
-                permission: "None",
-                category: "fun",
-                icon: "fa-user-check"
-             },
-            {
-                name: "Nicknmae",
-                syntax: "nickname",
-                description: "Change ones nickname",
-                example: "nickname @user user123",
-                permission: "Manage Nicknames",
-                category: "moderation",
-                icon: "fa-user-check"
-             },
-            {
-                name: "Permnick",
-                syntax: "secret",
-                description: "???",
-                example: "???",
-                permission: "???",
-                category: "???",
-                icon: "fa-user-check"
-             },
+                id: "fun",
+                name: "Fun",
+                description: "Fun commands to entertain your server members",
+                icon: "fa-gamepad",
+                gradient: "gradient-fun",
+                commandCount: 15,
+                popularCommands: ["/meme", "/8ball", "/joke", "/trivia", "/poll", "/gif", "/quote"],
+                commands: [
+                    { 
+                        name: "8ball", 
+                        description: "Ask the magic 8-ball a question", 
+                        params: [
+                            { name: "question", description: "Question to ask", required: true }
+                        ] 
+                    },  
+                    { 
+                        name: "quote", 
+                        description: "Quote a user's message", 
+                        params: [
+                            { name: "user", description: "User to quote", required: false },
+                            { name: "message_id", description: "Specific message ID to quote", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "roll", 
+                        description: "Roll a random number", 
+                        params: [
+                            { name: "max", description: "Maximum number (default 100)", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "coinflip", 
+                        description: "Flip a coin", 
+                        params: [] 
+                    },
+                    { 
+                        name: "rps", 
+                        description: "Play rock, paper, scissors", 
+                        params: [
+                            { name: "choice", description: "Your choice (rock, paper, scissors)", required: true }
+                        ] 
+                    },
+                    { 
+                        name: "ascii", 
+                        description: "Convert text to ASCII art", 
+                        params: [
+                            { name: "text", description: "Text to convert", required: true },
+                            { name: "font", description: "ASCII art font", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "fact", 
+                        description: "Get a random fact", 
+                        params: [
+                            { name: "category", description: "Fact category", required: false }
+                        ] 
+                    },
+                    { 
+                        name: "say", 
+                        description: "Make the bot say something", 
+                        params: [
+                            { name: "message", description: "Message to say", required: true }
+                        ] 
+                    }
+                ]
+            }
         ];
 
-        // DOM elements
-        const commandsList = document.getElementById('commandsList');
-        const searchInput = document.getElementById('searchInput');
-        const searchStats = document.getElementById('searchStats');
-        const resultCount = document.getElementById('resultCount');
-        const totalCount = document.getElementById('totalCount');
-        const categoryFilters = document.getElementById('categoryFilters');
-        
-        // Filter state
-        let currentCategory = 'all';
-        let currentSearchTerm = '';
-        
-        // Category icons mapping
-        const categoryIcons = {
-            'all': 'fa-globe-americas',
-            'moderation': 'fa-shield-alt',
-            'utility': 'fa-tools',
-            'server': 'fa-server',
-            'fun': 'fa-face-smile'
-        };
-        
-        // Extract unique categories
-        function getUniqueCategories() {
-            const categories = new Set();
-            commands.forEach(cmd => categories.add(cmd.category));
-            return Array.from(categories);
-        }
-        
-        // Initialize category filters
-        function initCategoryFilters() {
-            const categories = getUniqueCategories();
+        // Enhanced particle effects for details view
+        function createEnhancedParticles(container, color, count = 30) {
+            // Clear any existing particles
+            const existingParticles = container.querySelectorAll('.floating-particle');
+            existingParticles.forEach(p => p.remove());
             
-            categories.forEach(category => {
-                const button = document.createElement('button');
-                // Capitalize the first letter of the category
-                const displayName = category.charAt(0).toUpperCase() + category.slice(1);
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'floating-particle';
                 
-                // Get the appropriate icon for this category
-                const icon = categoryIcons[category] || 'fa-tag';
+                // Random particle size (2-8px)
+                const size = 2 + Math.random() * 6;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
                 
-                button.className = 'category-button bg-dark-700 hover:bg-dark-600 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center';
-                button.dataset.category = category;
-                button.innerHTML = `<i class="fas ${icon} mr-2"></i> ${displayName}`;
+                // Set particle color with transparency
+                particle.style.backgroundColor = color;
+                particle.style.opacity = 0.2 + Math.random() * 0.4;
                 
-                button.addEventListener('click', () => {
-                    // Update active button
-                    document.querySelectorAll('.category-button').forEach(btn => {
-                        btn.classList.remove('active');
-                        btn.classList.remove('bg-primary');
-                        btn.classList.add('bg-dark-700');
-                    });
-                    
-                    button.classList.add('active');
-                    button.classList.remove('bg-dark-700');
-                    
-                    // Update filter state
-                    currentCategory = category;
-                    
-                    // Apply filters
-                    applyFilters();
-                });
+                // Random starting position
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
                 
-                categoryFilters.appendChild(button);
-            });
-            
-            // Add event listener to "All Categories" button
-            document.querySelector('[data-category="all"]').addEventListener('click', () => {
-                document.querySelectorAll('.category-button').forEach(btn => {
-                    btn.classList.remove('active');
-                    btn.classList.remove('bg-primary');
-                    btn.classList.add('bg-dark-700');
-                });
+                // Add random floating animation
+                const duration = 15 + Math.random() * 30;
+                const delay = Math.random() * 10;
                 
-                document.querySelector('[data-category="all"]').classList.add('active');
-                document.querySelector('[data-category="all"]').classList.remove('bg-dark-700');
+                // Enhanced animation with x and y movement
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
                 
-                currentCategory = 'all';
-                applyFilters();
-            });
+                // Add transform and shadow for more dynamic effect
+                particle.style.transform = `translateZ(${Math.random() * 20}px)`;
+                
+                // Add particle to container
+                container.appendChild(particle);
+            }
         }
+
+        const detailContainer = document.getElementById('commands-detail-container');
+        let activeCategory = null;
         
-        // Function to copy text to clipboard
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                // Success feedback is handled in the UI with button state change
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
+        // Calculate total command count
+        let totalCommands = 0;
+        categoriesData.forEach(category => {
+            totalCommands += category.commands.length;
+        });
         
-        // Apply both category and search filters
-        function applyFilters() {
-            let filteredCommands = commands;
-            
-            // Apply category filter first
-            if (currentCategory !== 'all') {
-                filteredCommands = filteredCommands.filter(cmd => cmd.category === currentCategory);
+        // Update total command counter
+        document.getElementById('total-command-count').textContent = totalCommands;
+        
+        // Function to animate count up
+        function animateCountUp(element, targetCount) {
+            // Clear existing child nodes
+            while (element.firstChild) {
+                element.removeChild(element.firstChild);
             }
             
-            // Then apply search filter
-            if (currentSearchTerm !== '') {
-                filteredCommands = filteredCommands.filter(cmd => 
-                    cmd.name.toLowerCase().includes(currentSearchTerm) || 
-                    cmd.description.toLowerCase().includes(currentSearchTerm) ||
-                    cmd.syntax.toLowerCase().includes(currentSearchTerm) ||
-                    cmd.permission.toLowerCase().includes(currentSearchTerm)
-                );
+            // Add each digit separately for animation
+            const targetStr = targetCount.toString();
+            for (let i = 0; i < targetStr.length; i++) {
+                const digit = document.createElement('span');
+                digit.textContent = targetStr[i];
+                digit.className = 'count-animate';
+                digit.style.animationDelay = `${i * 0.1}s`;
+                element.appendChild(digit);
             }
-            
-            // Update search stats
-            if (currentSearchTerm !== '' || currentCategory !== 'all') {
-                searchStats.classList.remove('hidden');
-                resultCount.textContent = filteredCommands.length;
-                totalCount.textContent = commands.length;
-            } else {
-                searchStats.classList.add('hidden');
-            }
-            
-            renderCommands(filteredCommands);
         }
         
-        // Render commands with animation delay for staggered appearance
-        function renderCommands(filteredCommands = commands) {
-            commandsList.innerHTML = '';
+        // Function to show commands for a category
+        function showCategoryCommands(categoryId) {
+            // Get category data
+            const category = categoriesData.find(cat => cat.id === categoryId);
+            if (!category) return;
             
-            if (filteredCommands.length === 0) {
-                const noResults = document.createElement('div');
-                noResults.className = 'text-center p-8 bg-dark-800 rounded-lg border-2 border-dark-700 animate-fade-in';
-                noResults.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p class="text-gray-400 text-lg">No commands match your current filters.</p>
-                    <button id="clearFiltersBtn" class="mt-4 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors">
-                        Clear All Filters
+            // Set active category
+            activeCategory = categoryId;
+            
+            // Create detail view
+            let gradientClass = '';
+            switch(categoryId) {
+                case 'moderation': gradientClass = 'gradient-moderation'; break;
+                case 'utility': gradientClass = 'gradient-utility'; break;
+                case 'server': gradientClass = 'gradient-server'; break;
+                case 'management': gradientClass = 'gradient-management'; break;
+                case 'fun': gradientClass = 'gradient-fun'; break;
+            }
+            
+            // Create HTML content with light/dark compatible classes
+            let html = `
+                <div class="category-details-header ${gradientClass} p-6 text-white relative overflow-hidden">
+                    <div class="background-glow ${gradientClass}"></div>
+                    <div class="flex items-center mb-4">
+                        <div class="mr-4 bg-white bg-opacity-20 rounded-full p-3">
+                            <i class="fas ${category.icon} text-2xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-bold">${category.name} Commands</h2>
+                            <p>${category.description}</p>
+                        </div>
+                        <div class="text-right flex flex-col items-end">
+                            <div class="text-3xl font-bold command-count-display mb-1">
+                                <span class="command-number">${category.commands.length}</span>
+                            </div>
+                            <div class="text-sm opacity-70">Commands</div>
+                        </div>
+                    </div>
+                    <button id="close-detail" class="absolute top-4 right-4 bg-black bg-opacity-30 hover:bg-opacity-50 rounded-full p-2 transition-all">
+                        <i class="fas fa-times"></i>
                     </button>
+                </div>
+                <div class="p-6 relative command-list-container">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            `;
+            
+            // Add command items
+            category.commands.forEach(cmd => {
+                html += `
+                    <div class="command-item dark:bg-dark-700 light:bg-light-700 rounded-lg p-4 hover:bg-dark-600 dark:hover:bg-dark-600 light:hover:bg-light-600 transition-all">
+                        <h3 class="text-lg font-semibold dark:text-white light:text-gray-800 mb-1">
+                            <span class="slash-prefix">/</span>${cmd.name}
+                        </h3>
+                        <p class="dark:text-gray-300 light:text-gray-600 mb-3">${cmd.description}</p>
                 `;
-                commandsList.appendChild(noResults);
                 
-                // Add event listener to the clear button
-                document.getElementById('clearFiltersBtn').addEventListener('click', () => {
-                    // Clear search
-                    searchInput.value = '';
-                    currentSearchTerm = '';
+                // Add parameters if they exist
+                if (cmd.params && cmd.params.length > 0) {
+                    html += `<div class="dark:text-gray-400 light:text-gray-500 text-sm">Parameters:</div>`;
+                    html += `<div class="mt-1 flex flex-wrap gap-2">`;
                     
-                    // Reset category
-                    currentCategory = 'all';
-                    document.querySelectorAll('.category-button').forEach(btn => {
-                        btn.classList.remove('active');
-                        btn.classList.remove('bg-primary');
-                        btn.classList.add('bg-dark-700');
+                    cmd.params.forEach(param => {
+                        html += `<span class="parameter ${param.required ? 'required' : 'optional'}" title="${param.description}">
+                            ${param.name}${param.required ? '*' : ''}
+                        </span>`;
                     });
-                    document.querySelector('[data-category="all"]').classList.add('active');
-                    document.querySelector('[data-category="all"]').classList.remove('bg-dark-700');
                     
-                    // Apply cleared filters
-                    applyFilters();
-                    searchInput.focus();
-                });
+                    html += `</div>`;
+                } else {
+                    html += `<div class="dark:text-gray-400 light:text-gray-500 text-sm">No parameters required</div>`;
+                }
                 
+                html += `</div>`;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            // Set the content and show
+            detailContainer.innerHTML = html;
+            detailContainer.classList.add('visible');
+            
+            // Add event listener to close button
+            document.getElementById('close-detail').addEventListener('click', function() {
+                closeDetailView();
+            });
+            
+            // Animate the command count number
+            const commandNumberElement = detailContainer.querySelector('.command-number');
+            animateCountUp(commandNumberElement, category.commands.length);
+            
+            // Create enhanced floating particles
+            const particleColor = getComputedStyle(detailContainer.querySelector(`.${gradientClass}`)).backgroundColor;
+            createEnhancedParticles(detailContainer.querySelector('.command-list-container'), particleColor, 50);
+            
+            // Add animation classes to command items after a slight delay
+            setTimeout(() => {
+                document.querySelectorAll('.command-item').forEach(item => {
+                    item.classList.add('visible');
+                });
+            }, 100);
+            
+            // Scroll to the detail container
+            setTimeout(() => {
+                detailContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 200);
+        }
+        
+        // Function to close the detail view
+        function closeDetailView() {
+            // Remove animation classes from command items
+            document.querySelectorAll('.command-item').forEach(item => {
+                item.classList.remove('visible');
+            });
+            
+            // Add fade-out animation
+            detailContainer.classList.remove('visible');
+            
+            // Remove active state from all cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('ring-2', 'ring-primary', 'ring-opacity-70');
+            });
+            
+            activeCategory = null;
+        }
+        
+        // Theme toggle functionality
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const html = document.documentElement;
+            const themeIcon = document.querySelector('#themeToggle i');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                
+                // Update body background for light mode
+                document.body.classList.remove('bg-dark-900');
+                document.body.classList.add('bg-light-900');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                
+                // Update body background for dark mode
+                document.body.classList.remove('bg-light-900');
+                document.body.classList.add('bg-dark-900');
+            }
+        });
+        
+        // Add click event listeners to "View All" buttons
+        document.querySelectorAll('.view-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent the card click from also firing
+                
+                const categoryCard = this.closest('.category-card');
+                const categoryId = categoryCard.dataset.category;
+                
+                showCategoryCommands(categoryId);
+                
+                // Add active state to the clicked card
+                document.querySelectorAll('.category-card').forEach(card => {
+                    if (card.dataset.category === categoryId) {
+                        card.classList.add('ring-2', 'ring-primary', 'ring-opacity-70');
+                    } else {
+                        card.classList.remove('ring-2', 'ring-primary', 'ring-opacity-70');
+                    }
+                });
+            });
+        });
+        
+        // Add click event listener to category cards (in addition to buttons)
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Only trigger if the click wasn't on the button
+                if (!e.target.closest('.view-button')) {
+                    const categoryId = this.dataset.category;
+                    showCategoryCommands(categoryId);
+                    
+                    // Add active state to the clicked card
+                    document.querySelectorAll('.category-card').forEach(c => {
+                        if (c.dataset.category === categoryId) {
+                            c.classList.add('ring-2', 'ring-primary', 'ring-opacity-70');
+                        } else {
+                            c.classList.remove('ring-2', 'ring-primary', 'ring-opacity-70');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Search functionality with highlighting
+        const searchInput = document.getElementById('searchInput');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                // If search is empty, show all categories and close detail view
+                document.querySelectorAll('.category-card').forEach(card => {
+                    card.style.display = 'block';
+                });
+                if (activeCategory) {
+                    closeDetailView();
+                }
                 return;
             }
             
-            filteredCommands.forEach((cmd, index) => {
-                const cmdCard = document.createElement('div');
-                cmdCard.className = 'command-card rounded-lg overflow-hidden transition-all relative z-10';
-                cmdCard.style.animationDelay = `${index * 0.1}s`;
+            // Check each category and its commands
+            let hasMatch = false;
+            let matchedCategory = null;
+            
+            categoriesData.forEach(category => {
+                const categoryCard = document.querySelector(`.category-card[data-category="${category.id}"]`);
+                const categoryMatches = category.name.toLowerCase().includes(searchTerm) || 
+                                       category.description.toLowerCase().includes(searchTerm);
+                                       
+                const matchedCommands = category.commands.filter(cmd => 
+                    cmd.name.toLowerCase().includes(searchTerm) ||
+                    cmd.description.toLowerCase().includes(searchTerm) ||
+                    (cmd.params && cmd.params.some(param => param.name.toLowerCase().includes(searchTerm)))
+                );
                 
-                const header = document.createElement('div');
-                header.className = 'card-header px-5 py-4 text-white flex justify-between items-center relative';
+                const commandMatches = matchedCommands.length > 0;
                 
-                const nameContainer = document.createElement('div');
-                nameContainer.className = 'flex items-center';
-                nameContainer.innerHTML = `
-                    <div class="bg-white bg-opacity-20 rounded-full w-8 h-8 flex items-center justify-center mr-3">
-                        <i class="fas ${cmd.icon}"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold">${cmd.name}</h3>
-                        <span class="text-xs opacity-80 uppercase tracking-wider">${cmd.category}</span>
-                    </div>
-                `;
-                
-                // Permission badges with icons
-                const permissionBadge = document.createElement('div');
-                let badgeClass = 'permission-badge text-xs';
-                let permIcon = '';
-                
-                if (cmd.permission === 'None') {
-                    badgeClass += ' bg-green-500 text-white';
-                    permIcon = 'fa-check-circle';
-                } else if (cmd.permission.includes('Ban')) {
-                    badgeClass += ' bg-red-500 text-white';
-                    permIcon = 'fa-exclamation-triangle';
+                // Show or hide based on matches
+                if (categoryMatches || commandMatches) {
+                    categoryCard.style.display = 'block';
+                    hasMatch = true;
+                    
+                    // If we found command matches and haven't already set a matched category
+                    if (commandMatches && !matchedCategory) {
+                        matchedCategory = category.id;
+                    }
                 } else {
-                    badgeClass += ' bg-yellow-500 text-white';
-                    permIcon = 'fa-exclamation-circle';
+                    categoryCard.style.display = 'none';
                 }
-                
-                permissionBadge.className = badgeClass;
-                permissionBadge.innerHTML = `<i class="fas ${permIcon}"></i> ${cmd.permission}`;
-                
-                header.appendChild(nameContainer);
-                header.appendChild(permissionBadge);
-                
-                const body = document.createElement('div');
-                body.className = 'p-5 bg-dark-800 bg-opacity-95';
-                
-                // Syntax section with copy button
-                const syntaxDiv = document.createElement('div');
-                syntaxDiv.className = 'mb-5 relative';
-                syntaxDiv.innerHTML = `
-                    <div class="flex items-center mb-2">
-                        <i class="fas fa-terminal text-primary mr-2"></i>
-                        <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Syntax</h4>
-                    </div>
-                    <div class="syntax-block relative">
-                        <code class="block bg-dark-900 p-3 rounded text-primary font-mono text-sm border border-dark-700">${cmd.syntax}</code>
-                        <button class="copy-btn absolute top-2 right-2 bg-dark-700 hover:bg-dark-600 p-1.5 rounded transition-all tooltip" data-copy="${cmd.syntax}">
-                            <i class="fas fa-copy text-gray-400 hover:text-white"></i>
-                            <span class="tooltip-text text-xs">Copy to clipboard</span>
-                        </button>
-                    </div>
-                `;
-                
-                // Description section
-                const descDiv = document.createElement('div');
-                descDiv.className = 'mb-5';
-                descDiv.innerHTML = `
-                    <div class="flex items-center mb-2">
-                        <i class="fas fa-info-circle text-blue-400 mr-2"></i>
-                        <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Description</h4>
-                    </div>
-                    <div class="bg-dark-900 p-3 rounded border border-dark-700">
-                        <p class="text-gray-300">${cmd.description}</p>
-                    </div>
-                `;
-                
-                // Example section with copy button
-                const exampleDiv = document.createElement('div');
-                exampleDiv.className = 'mb-2 relative';
-                exampleDiv.innerHTML = `
-                    <div class="flex items-center mb-2">
-                        <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
-                        <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Example</h4>
-                    </div>
-                    <div class="example-block relative">
-                        <code class="block bg-dark-900 p-3 rounded text-green-400 font-mono text-sm border border-dark-700">${cmd.example}</code>
-                        <button class="copy-btn absolute top-2 right-2 bg-dark-700 hover:bg-dark-600 p-1.5 rounded transition-all tooltip" data-copy="${cmd.example}">
-                            <i class="fas fa-copy text-gray-400 hover:text-white"></i>
-                            <span class="tooltip-text text-xs">Copy to clipboard</span>
-                        </button>
-                    </div>
-                `;
-                
-                body.appendChild(syntaxDiv);
-                body.appendChild(descDiv);
-                body.appendChild(exampleDiv);
-                
-                cmdCard.appendChild(header);
-                cmdCard.appendChild(body);
-                
-                commandsList.appendChild(cmdCard);
             });
             
-            // Add event listeners to all copy buttons
-            document.querySelectorAll('.copy-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const textToCopy = this.getAttribute('data-copy');
-                    copyToClipboard(textToCopy);
-                    
-                    // Visual feedback
-                    const originalIcon = this.querySelector('i').className;
-                    this.querySelector('i').className = 'fas fa-check text-green-400';
-                    this.querySelector('.tooltip-text').textContent = 'Copied!';
-                    
-                    // Reset after 2 seconds
-                    setTimeout(() => {
-                        this.querySelector('i').className = originalIcon;
-                        this.querySelector('.tooltip-text').textContent = 'Copy to clipboard';
-                    }, 2000);
+            // If we have a specific command match, show that category's commands
+            if (matchedCategory && (!activeCategory || activeCategory !== matchedCategory)) {
+                showCategoryCommands(matchedCategory);
+                
+                // Add active state to the matched card
+                document.querySelectorAll('.category-card').forEach(card => {
+                    if (card.dataset.category === matchedCategory) {
+                        card.classList.add('ring-2', 'ring-primary', 'ring-opacity-70');
+                    } else {
+                        card.classList.remove('ring-2', 'ring-primary', 'ring-opacity-70');
+                    }
                 });
-            });
-        }
-        
-        // Enhanced search functionality
-        searchInput.addEventListener('input', () => {
-            currentSearchTerm = searchInput.value.toLowerCase().trim();
-            applyFilters();
+            } else if (!hasMatch && activeCategory) {
+                // No matches at all, close detail view
+                closeDetailView();
+            }
         });
         
         // Add visual feedback when search input is focused
@@ -1080,24 +1895,33 @@
             searchInput.parentElement.classList.remove('search-focused');
         });
         
-        // Initialize the app
-        initCategoryFilters();
-        applyFilters();
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && detailContainer.classList.contains('visible')) {
+                closeDetailView();
+            }
+        });
         
-        // Add subtle typing effect to the search placeholder
-        const searchPlaceholders = [
-            "Search commands by name...",
-            "Search by description...",
-            "Search by syntax...",
-            "Search by permission...",
-            "Search by category..."
-        ];
-        
-        let placeholderIndex = 0;
-        setInterval(() => {
-            searchInput.placeholder = searchPlaceholders[placeholderIndex];
-            placeholderIndex = (placeholderIndex + 1) % searchPlaceholders.length;
-        }, 3000);
+        document.querySelectorAll('.card-3d').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateY = ((x - centerX) / centerX) * 5;
+                const rotateX = ((centerY - y) / centerY) * 5;
+                
+                const content = this.querySelector('.card-3d-content');
+                content.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const content = this.querySelector('.card-3d-content');
+                content.style.transform = 'rotateX(0) rotateY(0)';
+            });
+        });
     </script>
 </body>
 </html>
